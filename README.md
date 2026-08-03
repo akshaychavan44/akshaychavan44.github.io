@@ -18,7 +18,7 @@ This is my personal portfolio website built using HTML, CSS, and JavaScript. It 
 
 ## Live Demo
 
-Add your deployed portfolio link here.
+https://akshaychavan44.github.io
 
 ## Contact
 
