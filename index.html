@@ -4,195 +4,379 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Akshay Chavan | Software Developer</title>
+    <meta name="description" content="Akshay Chavan - Software Developer specializing in Java, Spring Boot, Next.js, React, Node.js, and PostgreSQL." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Header & Navigation -->
     <header class="site-header">
-      <nav class="nav">
-        <a class="brand" href="#home">Akshay Chavan</a>
-        <button class="menu-toggle" type="button" aria-label="Toggle menu">Menu</button>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </nav>
+      <div class="container nav">
+        <a class="brand" href="#home">Akshay Chavan.</a>
+
+        <nav class="nav-links" id="navLinks" aria-label="Main navigation"><a href="#projects">Work</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">Menu</button>
+      </div>
     </header>
 
-    <main>
-      <section class="hero" id="home">
-        <div class="hero-content">
-          <p class="eyebrow">Aspiring Software Developer</p>
-          <h1>Building backend and full-stack projects with Java, Spring Boot, MongoDB, and JavaScript.</h1>
-          <p class="hero-text">
-            I am focused on developing practical applications, working with REST APIs, databases,
-            and clean project structure while growing as a well-rounded developer.
+    <main><section class="hero" id="home"><div class="container hero-grid"><div><p class="eyebrow">Software developer · India</p><h1>Building thoughtful<br>digital products, from<br>interface to infrastructure.</h1><p class="hero-intro">I’m a full-stack developer who turns ideas into real, working products. I build scalable web applications using Next.js, Java, and PostgreSQL, with a focus on clean code, user experience, and real-world impact.</p><div class="hero-actions"><a class="btn btn-primary" href="#projects">Explore selected work <span aria-hidden="true">↗</span></a><a class="resume-link" href="Akshay_ - _Resume _).docx" download><span aria-hidden="true">↓</span> Download résumé</a></div></div><aside class="hero-aside"><div><p class="eyebrow">Currently</p><h3>Software Developer Intern</h3><p>Zootechx</p></div><div><p class="eyebrow">Focus</p><h3>Full-stack development</h3><p>Building web applications, exploring new technologies, and continuously improving as a developer.</p></div><div class="aside-contact"><span>Kalyan, India</span><a href="mailto:akshaychavan44.ac@gmail.com">akshaychavan44.ac@gmail.com</a></div></aside></div></section><section class="section" id="projects">
+        <div class="container">
+          <div class="section-heading"><h2>Selected work <span>/ 2025 — 2026</span></h2><button class="text-link" id="projectToggle" aria-expanded="false" aria-controls="moreProjects">View all projects <span aria-hidden="true">→</span></button></div>
+          
+
+          <div class="projects-container"><article class="project-item featured"><a class="project-preview" href="https://zootechx.vercel.app/" target="_blank" rel="noreferrer" aria-label="Visit Zootechx CRM / ERP Platform"><img src="/images/zootechx.jpg" alt="Zootechx CRM dashboard" width="1440" height="900"></a>
+              <div class="project-header">
+                <div class="project-header-left">
+                  <h3 class="project-title"><a href="https://zootechx.vercel.app/" target="_blank" rel="noreferrer">Zootechx — CRM & ERP Platform<span aria-hidden="true">↗</span></a></h3>
+                  
+                </div>
+              </div>
+              <p class="project-desc">A full-stack CRM/ERP platform with lead management, quotations, invoices, payments, and role-based dashboards for different teams.</p>
+              
+              <div class="project-tech-list">
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Tailwind CSS</span>
+              </div>
+              
+            </article><article class="project-item featured"><a class="project-preview" href="https://dj-impex-taupe.vercel.app/" target="_blank" rel="noreferrer" aria-label="Visit DJ Impex – Textile Portfolio Website"><img src="/images/dj-impex.jpg" alt="DJ Impex textile website" width="1440" height="900"></a>
+              <div class="project-header">
+                <div class="project-header-left">
+                  <h3 class="project-title"><a href="https://dj-impex-taupe.vercel.app/" target="_blank" rel="noreferrer">DJ Impex — Textile Portfolio<span aria-hidden="true">↗</span></a></h3>
+                  
+                </div>
+              </div>
+              <p class="project-desc">A responsive textile portfolio showcasing fabric collections, company information, and inquiries through reusable, modern interfaces.</p>
+              
+              <div class="project-tech-list">
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">Vercel</span>
+              </div>
+              
+            </article></div><div class="more-projects" id="moreProjects" hidden><article class="project-item">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <h3 class="project-title">RE—WEAR – Circular Fashion Initiative</h3>
+                  <span class="project-category-badge">Frontend</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                A sustainable fashion web application encouraging textile recycling and circular economy awareness through interactive educational flows.
+              </p>
+              
+              <div class="project-tech-list">
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">Framer Motion</span>
+                <span class="tech-tag">React</span>
+              </div>
+              <div class="project-actions">
+                <a class="btn btn-secondary btn-sm" href="https://github.com/akshaychavan44" target="_blank" rel="noreferrer">GitHub Profile ↗</a>
+              </div>
+            </article><article class="project-item">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <h3 class="project-title">CareerTrack – Job Application Tracker</h3>
+                  <span class="project-category-badge">Full Stack</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                A full-stack application lifecycle tracking system with secure user authentication, application status management, and dashboard analytics.
+              </p>
+              
+              <div class="project-tech-list">
+                <span class="tech-tag">Java</span>
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">React.js</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">JWT Auth</span>
+                <span class="tech-tag">REST APIs</span>
+              </div>
+              <div class="project-actions">
+                <a class="btn btn-secondary btn-sm" href="https://github.com/akshaychavan44/careertrack-fullstack" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+              </div>
+            </article><article class="project-item">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <h3 class="project-title">E-Commerce Management System</h3>
+                  <span class="project-category-badge">Backend</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                A distributed backend architecture for e-commerce operations, organized into independent services for product catalog, shopping cart, orders, and payments.
+              </p>
+              
+              <div class="project-tech-list">
+                <span class="tech-tag">Java</span>
+                <span class="tech-tag">Spring Boot</span>
+                <span class="tech-tag">Microservices</span>
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">REST APIs</span>
+                <span class="tech-tag">Postman</span>
+              </div>
+              <div class="project-actions">
+                <a class="btn btn-secondary btn-sm" href="https://github.com/akshaychavan44/ecom" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+              </div>
+            </article><article class="project-item">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <h3 class="project-title">AI Personal Vault</h3>
+                  <span class="project-category-badge">Full Stack</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                A personal storage and search platform for organizing and retrieving files, documents, and notes through intelligent search queries.
+              </p>
+              
+              <div class="project-tech-list">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express.js</span>
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Tailwind CSS</span>
+              </div>
+              <div class="project-actions">
+                <a class="btn btn-secondary btn-sm" href="https://github.com/akshaychavan44" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+              </div>
+            </article><article class="project-item">
+              <div class="project-header">
+                <div class="project-header-left">
+                  <h3 class="project-title">Ticket Management System</h3>
+                  <span class="project-category-badge">Full Stack</span>
+                </div>
+              </div>
+              <p class="project-desc">
+                A support ticket tracking system allowing users to log, prioritize, assign, and resolve customer issues through a clean interface.
+              </p>
+              
+              <div class="project-tech-list">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express.js</span>
+                <span class="tech-tag">React.js</span>
+                <span class="tech-tag">MongoDB Atlas</span>
+                <span class="tech-tag">Tailwind CSS</span>
+                <span class="tech-tag">Render</span>
+              </div>
+              <div class="project-actions">
+                <a class="btn btn-secondary btn-sm" href="https://github.com/akshaychavan44/Ticket-Management-System" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+              </div>
+            </article></div></div></section><section class="section" id="experience">
+        <div class="container">
+          <h2>Experience</h2>
+          <div class="experience-list">
+            
+            <!-- Zootechx -->
+            <article class="experience-item">
+              <div class="exp-header-row">
+                <h3 class="exp-title">Software Developer Intern <span class="exp-company">@ Zootechx</span></h3>
+                <span class="exp-duration">Aug 2026 – Present</span>
+              </div>
+              <p class="exp-project-name">CRM / ERP Platform – Full-Stack Development</p>
+              <ul class="exp-bullets">
+                <li>Built end-to-end CRM modules covering leads management, follow-ups, client records, quotation generation, invoicing, and payment processing.</li>
+                <li>Developed granular role-based access dashboards for Super Admin, Sub-Admin, Sales, Developer, and Marketing teams.</li>
+                <li>Engineered responsive frontend interfaces and backend API integrations with PostgreSQL database management.</li>
+              </ul>
+              <div class="exp-tech-row">
+                <span class="skill-tag">Next.js</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">PostgreSQL</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Tailwind CSS</span>
+                <a class="btn-link" style="margin-left: 8px;" href="https://zootechx.vercel.app/" target="_blank" rel="noreferrer">Live Website ↗</a>
+              </div>
+            </article>
+
+            <!-- Accenture -->
+            <article class="experience-item">
+              <div class="exp-header-row">
+                <h3 class="exp-title">Healthcare Business Analyst <span class="exp-company">@ Accenture</span></h3>
+                <span class="exp-duration">Aug 2024 – Apr 2026</span>
+              </div>
+              <p class="exp-project-name">Provider Operations & Enrollment Management</p>
+              <ul class="exp-bullets">
+                <li>Verified healthcare practitioner credentials and provider data using internal workflow applications to support accurate enrollment.</li>
+                <li>Managed case records and executed regular data updates while maintaining strict compliance with client SLAs and governance protocols.</li>
+              </ul>
+              <div class="exp-tech-row">
+                <span class="skill-tag">Data Management</span>
+                <span class="skill-tag">Compliance & Verification</span>
+                <span class="skill-tag">Internal Workflow Tools</span>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section><section class="section" id="about">
+        <div class="container">
+          <h2>About</h2>
+          <p class="section-lead">
+            I am a software developer with hands-on experience building production-ready web applications, enterprise CRM modules, and microservices architectures. I hold a Bachelor of Science in Information Technology from Saket College with an 8.70/10 CGPA and completed professional Java Full Stack Development certification at Quality Software Technologies. My background combines corporate operations experience at Accenture with practical full-stack development at Zootechx.
           </p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#projects">View Projects</a>
-            <a class="btn secondary" href="https://github.com/akshaychavan44" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </section><section class="section" id="skills">
+        <div class="container">
+          <h2>Skills</h2>
+          <div class="skills-grid">
+            <div class="skill-group">
+              <h3>Programming Languages</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">JavaScript (ES6+)</span>
+                <span class="skill-tag">TypeScript</span>
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3>Backend & APIs</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Spring Boot</span>
+                <span class="skill-tag">Node.js</span>
+                <span class="skill-tag">Express.js</span>
+                <span class="skill-tag">REST APIs</span>
+                <span class="skill-tag">Microservices</span>
+                <span class="skill-tag">JWT Authentication</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3>Frontend</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">React.js</span>
+                <span class="skill-tag">Next.js</span>
+                <span class="skill-tag">Tailwind CSS</span>
+                <span class="skill-tag">Bootstrap</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3>Databases</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">PostgreSQL (Neon)</span>
+                <span class="skill-tag">MongoDB (Atlas)</span>
+                <span class="skill-tag">MySQL</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3>Tools & Platforms</h3>
+              <div class="skill-tags">
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">GitHub</span>
+                <span class="skill-tag">Maven</span>
+                <span class="skill-tag">Postman</span>
+                <span class="skill-tag">Vercel</span>
+                <span class="skill-tag">Render</span>
+                <span class="skill-tag">VS Code</span>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="hero-visual" aria-label="Developer profile visual">
-          <div class="avatar">AC</div>
-          <div class="code-panel">
-            <span>const developer = {</span>
-            <span>  name: "Akshay",</span>
-            <span>  skills: ["Java", "Spring Boot"],</span>
-            <span>  database: "MongoDB"</span>
-            <span>};</span>
+      </section><section class="section" id="education">
+        <div class="container">
+          <h2>Education & Certifications</h2>
+          <div class="edu-list">
+            
+            <div class="edu-item">
+              <h3 class="edu-title">Java Full Stack Development</h3>
+              <p class="edu-inst">Quality Software Technologies</p>
+              <div class="edu-meta">
+                <span>Certification</span>
+                <span>Verified</span>
+              </div>
+            </div>
+
+            <div class="edu-item">
+              <h3 class="edu-title">B.Sc. Information Technology</h3>
+              <p class="edu-inst">Saket College</p>
+              <div class="edu-meta">
+                <span>Score: 8.70 / 10 CGPA</span>
+                <span>2020 – 2023</span>
+              </div>
+            </div>
+
+            <div class="edu-item">
+              <h3 class="edu-title">Higher Secondary Certificate (HSC)</h3>
+              <p class="edu-inst">Saket College</p>
+              <div class="edu-meta">
+                <span>Score: 56.20%</span>
+                <span>2019 – 2020</span>
+              </div>
+            </div>
+
+            <div class="edu-item">
+              <h3 class="edu-title">Secondary School Certificate (SSC)</h3>
+              <p class="edu-inst">M.R.G. School</p>
+              <div class="edu-meta">
+                <span>Score: 81.60%</span>
+                <span>2017 – 2018</span>
+              </div>
+            </div>
+
           </div>
         </div>
-      </section>
+      </section><section class="section" id="contact">
+        <div class="container">
+          <h2>Contact</h2><h3 class="contact-title">Let’s build something useful.</h3>
+          <p class="section-lead" style="margin-bottom: 20px;">
+            I am open to software development opportunities. Feel free to reach out directly.
+          </p>
 
-      <section class="section" id="about">
-        <div class="section-heading">
-          <p class="eyebrow">About</p>
-          <h2>Software developer fresher with hands-on project experience.</h2>
-        </div>
-        <p class="about-text">
-          I enjoy creating backend and full-stack applications using Java, Spring Boot, REST APIs,
-          MongoDB, JavaScript, React, Node.js, and Express.js. My projects focus on real use cases
-          such as job tracking, e-commerce management, and notes management.
-        </p>
-      </section>
+          <div class="contact-card">
+            <div class="contact-grid">
+              <div class="contact-methods">
+                <div class="contact-row">
+                  <span class="contact-label">Email</span>
+                  <a class="contact-val" href="mailto:akshaychavan44.ac@gmail.com">akshaychavan44.ac@gmail.com</a>
+                </div>
+                <div class="contact-row">
+                  <span class="contact-label">Phone</span>
+                  <a class="contact-val" href="tel:+917304763996">+91 7304763996</a>
+                </div>
+                <div class="contact-row">
+                  <span class="contact-label">Location</span>
+                  <span class="contact-val">Kalyan, Maharashtra, India</span>
+                </div>
+                <div class="contact-row">
+                  <span class="contact-label">GitHub</span>
+                  <a class="btn-link" href="https://github.com/akshaychavan44" target="_blank" rel="noreferrer">github.com/akshaychavan44 ↗</a>
+                </div>
+              </div>
 
-      <section class="section" id="skills">
-        <div class="section-heading">
-          <p class="eyebrow">Skills</p>
-          <h2>Technologies I work with</h2>
-        </div>
-        <div class="skills-grid">
-          <span>Java</span>
-          <span>Spring Boot</span>
-          <span>MongoDB</span>
-          <span>REST APIs</span>
-          <span>Spring Security</span>
-          <span>JWT</span>
-          <span>JavaScript</span>
-          <span>React.js</span>
-          <span>Node.js</span>
-          <span>Express.js</span>
-          <span>HTML</span>
-          <span>CSS</span>
-          <span>Postman</span>
-          <span>Git & GitHub</span>
-          <span>Render</span>
-          <span>MongoDB Atlas</span>
-          <span>Tailwind CSS</span>
-        </div>
-      </section>
-
-      <section class="section" id="projects">
-        <div class="section-heading">
-          <p class="eyebrow">Projects</p>
-          <h2>Featured work</h2>
-        </div>
-        <div class="projects-grid">
-          <article class="project-card">
-            <p class="project-type">Full Stack</p>
-            <h3>CareerTrack</h3>
-            <p>Job application tracker with login, JWT authentication, application CRUD, interview tracking, and dashboard analytics.</p>
-            <div class="tags">
-              <span>React</span>
-              <span>Spring Boot</span>
-              <span>MongoDB</span>
-              <span>JWT</span>
+              <div class="contact-actions">
+                <a class="btn btn-primary" href="mailto:akshaychavan44.ac@gmail.com">Send Email</a>
+                <button class="btn btn-secondary" id="copyEmailBtn">Copy Email Address</button>
+              </div>
             </div>
-            <a href="https://github.com/akshaychavan44/careertrack-fullstack" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
-
-          <article class="project-card">
-            <p class="project-type">Backend</p>
-            <h3>E-Commerce Management System</h3>
-            <p>Scalable backend system with Product, Cart, Order, Payment, and User modules using REST APIs and MongoDB.</p>
-            <div class="tags">
-              <span>Java</span>
-              <span>Spring Boot</span>
-              <span>MongoDB</span>
-              <span>APIs</span>
-            </div>
-            <a href="https://github.com/akshaychavan44/ecom" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
-
-          <article class="project-card">
-            <p class="project-type">Full Stack</p>
-            <h3>Notes Management System</h3>
-            <p>Notes app where users can create, view, update, and delete notes with a Spring Boot backend and simple frontend.</p>
-            <div class="tags">
-              <span>Spring Boot</span>
-              <span>MongoDB</span>
-              <span>JavaScript</span>
-              <span>HTML/CSS</span>
-            </div>
-            <a href="https://github.com/akshaychavan44" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
-
-          <article class="project-card">
-            <p class="project-type">Full Stack</p>
-            <h3>Ticket Management System</h3>
-            <p>Ticket management app where users can create, view, update, and delete tickets with a Spring Boot backend and frontend.</p>
-            <div class="tags">
-              <span>Node.JS</span>
-              <span>Express.js</span>
-              <span>Tailwind CSS</span>
-              <span>MongoDB Atlas</span>
-              <span>React.JS</span>
-              <span>Render</span>
-            </div>
-            <a href="https://github.com/akshaychavan44/Ticket-Management-System" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
-
-          <article class="project-card">
-            <p class="project-type">Backend</p>
-            <h3>Node Express CRUD API</h3>
-            <p>Backend-only CRUD REST API for creating, updating, and deleting notes, tested using Postman.</p>
-            <div class="tags">
-              <span>Node.js</span>
-              <span>Express.js</span>
-              <span>REST API</span>
-              <span>Postman</span>
-            </div>
-            <a href="https://github.com/akshaychavan44" target="_blank" rel="noreferrer">View on GitHub</a>
-          </article>
+          </div>
         </div>
-      </section>
+      </section></main>
 
-      <section class="section contact" id="contact">
-        <div>
-          <p class="eyebrow">Contact</p>
-          <h2>Open to fresher software developer opportunities.</h2>
-          <p>Connect with me for Java, Spring Boot, backend, or full-stack developer roles.</p>
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© 2026 Akshay Chavan. Built with HTML, CSS, & JavaScript.</p>
+        <div class="footer-links">
+          <a href="#home">Top ↑</a>
+          <a href="https://github.com/akshaychavan44" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="mailto:akshaychavan44.ac@gmail.com">Email</a>
         </div>
-        <div class="contact-actions">
-<div class="contact-actions">
-  <a
-    class="btn primary"
-    href="https://mail.google.com/mail/?view=cm&fs=1&to=akshaychavan44.ac@gmail.com"
-    target="_blank"
-    rel="noreferrer"
-  >
-    Email Me
-  </a>
-
-  <a
-    class="btn secondary"
-    href="https://github.com/akshaychavan44"
-    target="_blank"
-    rel="noreferrer"
-  >
-    GitHub Profile
-  </a>
-</div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <p>© 2026 Akshay Chavan. Built with HTML, CSS, and JavaScript.</p>
+      </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" role="status" aria-live="polite">Email address copied to clipboard!</div>
+
+    <script type="module" src="script.js"></script>
   </body>
 </html>
+
