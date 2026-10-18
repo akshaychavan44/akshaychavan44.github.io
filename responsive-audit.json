@@ -1,0 +1,122 @@
+[
+  {
+    "clipped": [],
+    "containerWidths": [
+      269,
+      269,
+      269,
+      269,
+      269,
+      269,
+      269
+    ],
+    "mobileTabs": "row",
+    "overflow": false,
+    "width": 320
+  },
+  {
+    "clipped": [],
+    "containerWidths": [
+      324,
+      324,
+      324,
+      324,
+      324,
+      324,
+      324
+    ],
+    "mobileTabs": "row",
+    "overflow": false,
+    "width": 375
+  },
+  {
+    "clipped": [],
+    "containerWidths": [
+      377,
+      377,
+      377,
+      377,
+      377,
+      377,
+      377
+    ],
+    "mobileTabs": "row",
+    "overflow": false,
+    "width": 428
+  },
+  {
+    "clipped": [],
+    "containerWidths": [
+      699,
+      699,
+      699,
+      699,
+      699,
+      699,
+      699
+    ],
+    "mobileTabs": "column",
+    "overflow": false,
+    "width": 768
+  },
+  {
+    "clipped": [],
+    "containerWidths": [
+      937,
+      937,
+      937,
+      937,
+      937,
+      937,
+      937
+    ],
+    "mobileTabs": "column",
+    "overflow": false,
+    "width": 1024
+  },
+  {
+    "clipped": [],
+    "containerWidths": [
+      1255,
+      1255,
+      1255,
+      1255,
+      1255,
+      1255,
+      1255
+    ],
+    "mobileTabs": "column",
+    "overflow": false,
+    "width": 1366
+  },
+  {
+    "clipped": [],
+    "containerWidths": [
+      1320,
+      1320,
+      1320,
+      1320,
+      1320,
+      1320,
+      1320
+    ],
+    "mobileTabs": "column",
+    "overflow": false,
+    "width": 1440
+  },
+  {
+    "clipped": [],
+    "containerWidths": [
+      1320,
+      1320,
+      1320,
+      1320,
+      1320,
+      1320,
+      1320
+    ],
+    "mobileTabs": "column",
+    "overflow": false,
+    "width": 1920
+  }
+]
