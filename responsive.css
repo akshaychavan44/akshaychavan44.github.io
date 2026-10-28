@@ -138,3 +138,43 @@ body { color:var(--ink); background:#fff; }
 }
 /* One active navigation marker; hover does not add a duplicate underline. */
 .nav-links a[aria-current]::after{display:none}
+
+/* Keep the original layouts fluid inside the fixed section viewport. */
+.container > *, .projects-container > *, .additional-live-projects > *, .more-projects > *, .edu-list > * { min-width:0; }
+.hero-aside .aside-contact, .contact-val, .footer-description { overflow-wrap:anywhere; }
+.project-preview img { max-width:100%; }
+.skills-tabs { min-width:0; max-width:100%; }
+.skills-panels, .skills-panel { min-width:0; }
+.developer-visual .laptop { right:5%; }
+
+@media (min-width:768px) and (max-height:700px) {
+  :root { --section-space:32px; }
+  .hero { padding-top:24px; padding-bottom:58px; }
+  .hero h1 { font-size:clamp(32px,3.7vw,50px); }
+  .hero-intro { font-size:16px; margin-block:16px 20px; }
+  .hero-availability { margin-top:24px; }
+  .skills-tab { min-height:58px; padding:8px 12px; }
+  .skills-tab-label { font-size:20px; }
+  .skills-tab .skill-icon { width:34px; height:34px; }
+}
+@media (max-width:767px) {
+  .additional-live-projects { grid-template-columns:minmax(0,1fr); gap:30px; }
+  .hero-grid, .projects-container, #projects .more-projects, .connect-grid { grid-template-columns:minmax(0,1fr); }
+  .hero-aside .aside-contact { gap:10px 16px; }
+  .hero-actions, .connect-actions { flex-wrap:wrap; }
+  .developer-visual { max-width:100%; }
+  .site-header .nav { gap:12px; }
+  .site-header .brand { font-size:clamp(20px,5.7vw,28px); white-space:nowrap; }
+  .menu-toggle { flex-shrink:0; }
+  .nav-links { top:calc(var(--header-height,67px) - 1px); max-height:calc(100dvh - var(--header-height,67px)); }
+  .skills-tab, .skills-tab[aria-selected=true], .skills-tab:hover { min-height:48px; }
+  .project-title a span { flex-shrink:0; }
+  .hero h1 br { display:none; }
+}
+@media (max-width:360px) {
+  :root { --page-gutter:16px; }
+  .hero h1 { font-size:30px; }
+  .hero-aside, .edu-list { grid-template-columns:minmax(0,1fr); }
+  .contact-val { font-size:15px; }
+  .copy-email-link { margin-left:0; }
+}

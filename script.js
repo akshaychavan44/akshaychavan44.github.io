@@ -56,6 +56,7 @@ const sectionLinks = [...navLinks.querySelectorAll('a')];
 const trackedSections = sectionLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
 let navUpdatePending = false;
 function updateActiveSection() {
+  if (document.documentElement.classList.contains('deck-enabled')) { navUpdatePending = false; return; }
   const marker = window.innerHeight * 0.35;
   let active = trackedSections.find(section => section.getBoundingClientRect().top <= marker && section.getBoundingClientRect().bottom > marker);
   const skills = document.getElementById('skills');
@@ -71,97 +72,6 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 window.addEventListener('resize', updateActiveSection);
 updateActiveSection();
-
-// Motion is progressive enhancement: content stays readable if animation is unavailable.
-(() => {
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const hero = document.querySelector('.hero');
-  const heading = hero.querySelector('h1');
-  const heroParts = [...hero.querySelectorAll('.eyebrow, .hero-intro, .hero-actions, .hero-availability, .hero-aside, .hero-scroll')];
-  let intro;
-  let safetyTimer;
-  let finished = false;
-  const animations = [];
-  function finish() {
-    if (finished) return;
-    finished = true;
-    clearTimeout(safetyTimer);
-    intro?.remove();
-    animations.forEach(animation => animation.cancel());
-    window.dispatchEvent(new Event('portfolio-intro-finished'));
-  }
-  function revealHero() {
-    if (reducedMotion.matches || !heading.animate) return;
-    heading.querySelectorAll('.hero-line-inner').forEach((line, index) => {
-      line.animate([{ transform: 'translateY(110%)', opacity: 0 }, { transform: 'translateY(0)', opacity: 1 }], { duration: 800, delay: index * 110, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'backwards' });
-    });
-    heroParts.forEach((element, index) => element.animate([{ opacity: 0, transform: index % 2 ? 'translateX(24px)' : 'translateX(-24px)' }, { opacity: 1, transform: 'translateY(0)' }], { duration: 650, delay: 220 + index * 65, easing: 'ease-out', fill: 'backwards' }));
-  }
-  if (!reducedMotion.matches && heading.animate) {
-    const lines = heading.innerHTML.split(/<br\s*\/?\s*>/i);
-    heading.innerHTML = lines.map(line => `<span class="hero-line"><span class="hero-line-inner">${line}</span></span>`).join('');
-    {
-      intro = document.createElement('div');
-      intro.className = 'preloader';
-      intro.setAttribute('aria-hidden', 'true');
-      intro.innerHTML = '<div class="preloader-name"></div><p class="preloader-role">Software Developer</p><div class="preloader-track"><span class="preloader-progress"></span></div>';
-      const name = intro.querySelector('.preloader-name');
-      [...'AKSHAY CHAVAN'].forEach((letter, index) => {
-        const character = document.createElement('span');
-        character.textContent = letter;
-        name.append(character);
-        animations.push(character.animate([{ opacity: 0.08 }, { opacity: 1 }], { duration: 380, delay: 100 + index * 65, fill: 'both', easing: 'cubic-bezier(.4,0,.2,1)' }));
-      });
-      document.body.append(intro);
-      animations.push(intro.querySelector('.preloader-role').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 500, delay: 300, fill: 'both' }));
-      animations.push(intro.querySelector('.preloader-progress').animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 1300, delay: 150, fill: 'both', easing: 'cubic-bezier(.65,0,.35,1)' }));
-      safetyTimer = setTimeout(finish, 3200);
-      const curtain = intro.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: 750, delay: 1500, fill: 'forwards', easing: 'cubic-bezier(.76,0,.24,1)' });
-      animations.push(curtain);
-      const heroTimer = setTimeout(revealHero, 1700);
-      curtain.finished.then(finish).catch(() => clearTimeout(heroTimer));
-      // Never obscure content when someone starts navigating immediately.
-      window.addEventListener('keydown', finish, { once: true });
-      window.addEventListener('pointerdown', finish, { once: true });
-      window.addEventListener('wheel', finish, { once: true, passive: true });
-      reducedMotion.addEventListener('change', event => { if (event.matches) finish(); });
-    }
-  }
-  function startViewportReveals() {
-    if (reducedMotion.matches || !('IntersectionObserver' in window)) return;
-    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-      entry.target.classList.toggle('is-visible', entry.isIntersecting);
-    }), { threshold: 0, rootMargin: '-72px 0px -12% 0px' });
-    document.querySelectorAll('.section h2, .project-item, .experience-item, .skill-group, .edu-list > *, .contact-grid, .section-lead, .about-title, .contact-title').forEach((element, index) => {
-      element.classList.add('motion-reveal');
-      const siblings = [...element.parentElement.children].filter(sibling => sibling.matches(element.matches('.project-item') ? '.project-item' : element.tagName));
-      const order = siblings.indexOf(element);
-      element.dataset.motion = element.matches('.project-item') ? (order % 2 ? 'bottom' : 'top') : (index % 2 ? 'right' : 'left');
-      element.style.setProperty('--reveal-delay', `${(index % 3) * 65}ms`);
-      observer.observe(element);
-    });
-    reducedMotion.addEventListener('change', event => {
-      if (event.matches) { observer.disconnect(); document.querySelectorAll('.motion-reveal').forEach(element => element.classList.add('is-visible')); }
-    });
-  }
-  if (intro && !finished) window.addEventListener('portfolio-intro-finished', startViewportReveals, { once: true });
-  else startViewportReveals();
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  document.querySelectorAll('.btn-primary').forEach(button => {
-    button.addEventListener('pointermove', event => {
-      if (!finePointer.matches || reducedMotion.matches) return;
-      const bounds = button.getBoundingClientRect();
-      button.style.setProperty('--magnet-x', `${Math.max(-4, Math.min(4, (event.clientX - bounds.left - bounds.width / 2) * .06))}px`);
-      button.style.setProperty('--magnet-y', `${Math.max(-3, Math.min(3, (event.clientY - bounds.top - bounds.height / 2) * .1))}px`);
-    });
-    const reset = () => { button.style.removeProperty('--magnet-x'); button.style.removeProperty('--magnet-y'); };
-    button.addEventListener('pointerleave', reset);
-    button.addEventListener('blur', reset);
-  });
-})();
-
-
-
 
 // Enhance the existing skills content into accessible category tabs.
 (() => {
@@ -185,9 +95,9 @@ updateActiveSection();
     running.forEach(animation => animation.cancel());
     running = [];
     if (motion.matches || !panel.animate) return;
-    running.push(panel.animate([{ opacity: 0, transform: 'translateX(42px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: 550, easing: 'cubic-bezier(.22,1,.36,1)' }));
+    running.push(panel.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 550, easing: 'cubic-bezier(.22,1,.36,1)' }));
     panel.querySelectorAll('.skill-tag').forEach((skill, index) => {
-      running.push(skill.animate([{ opacity: 0, transform: 'translateX(22px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: 420, delay: 65 + index * 45, fill: 'backwards', easing: 'ease-out' }));
+      running.push(skill.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, delay: 65 + index * 45, fill: 'backwards', easing: 'ease-out' }));
     });
   }
   const buttons = groups.map((group, index) => {
@@ -243,7 +153,7 @@ updateActiveSection();
       panels.children[i].hidden = i !== index;
     });
     if (focus) buttons[index].focus();
-    if (compactTabs.matches && (changed || focus)) buttons[index].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: motion.matches ? 'instant' : 'smooth' });
+    if (!document.documentElement.classList.contains('deck-enabled') && compactTabs.matches && (changed || focus)) buttons[index].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: motion.matches ? 'instant' : 'smooth' });
     if (changed) animatePanel(panels.children[index]);
   }
   tabs.addEventListener('keydown', event => {

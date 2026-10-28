@@ -1,0 +1,49 @@
+/* Keep the established component styles; add glass and section motion only. */
+:root { --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; --serif:var(--sans); --header-height:calc(67px + env(safe-area-inset-top,0px)); }
+body { isolation:isolate; }
+body::before { content:''; position:fixed; inset:0; z-index:-1; background:radial-gradient(ellipse at 80% 20%,#eceff4 0,transparent 55%),#fafafa; pointer-events:none; }
+.site-header {
+  background:transparent;
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border-bottom:1px solid #11111108;
+  box-shadow:none;
+}
+/* Remove the old line masks so ascenders and descenders remain visible. */
+.hero h1 { line-height:1.12; overflow:visible; }
+.hero-line,.hero-line-inner { display:inline; overflow:visible; padding:0; margin:0; }
+.hero-line:not(:last-child)::after { content:' '; }
+.project-title a { overflow:visible; }
+
+/* Section transitions affect motion only; section markup and layout stay intact. */
+.deck-enabled { overflow:hidden; height:100%; scroll-behavior:auto; }
+.deck-enabled body { height:100%; overflow:hidden; overscroll-behavior:none; }
+.deck-enabled .site-header { position:fixed; inset:0 0 auto; height:var(--header-height); padding-top:env(safe-area-inset-top,0px); z-index:20; }
+.deck-enabled .deck { position:fixed; inset:var(--header-height) 0 0; overflow:hidden; }
+@supports(height:100dvh) {
+  .deck-enabled .deck { bottom:auto; height:calc(100dvh - var(--header-height)); }
+}
+.deck-enabled .deck-scene {
+  position:absolute; inset:0; overflow:auto; overscroll-behavior:contain;
+  scroll-behavior:auto; scrollbar-width:thin; overflow-x:hidden;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.deck-enabled .deck-scene[hidden] { display:none !important; }
+.deck-enabled .motion-reveal { opacity:1; translate:none; }
+.deck-status { position:fixed; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+@media(max-width:767px) {
+  .site-header .nav-links {
+    background:#f8fafbd9;
+    backdrop-filter:blur(24px) saturate(160%);
+    -webkit-backdrop-filter:blur(24px) saturate(160%);
+    border-bottom-color:#ffffff99;
+    box-shadow:0 12px 28px #172b480a;
+  }
+}
+@media print {
+  .deck-enabled,.deck-enabled body { overflow:visible; height:auto; }
+  .deck-enabled .site-header { position:static; }
+  .deck-enabled .deck { position:static; overflow:visible; }
+  html.deck-enabled .deck-scene,html.deck-enabled .deck-scene[hidden] { position:static; display:block !important; overflow:visible; }
+  .deck-status { display:none; }
+}
