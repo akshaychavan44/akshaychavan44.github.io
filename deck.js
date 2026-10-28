@@ -24,10 +24,12 @@ const chapterNames = { home: 'Introduction', projects: 'Selected work', experien
 let active = Math.max(0, scenes.findIndex(scene => sceneId(scene) === initialHash));
 let busy = false;
 let running = [];
-let queuedDirection = null;
+let transitionDirection = 0;
 
 function requestStep(direction) {
-  if (busy) { queuedDirection = direction; return; }
+  // Reverse immediately instead of waiting for the full entrance animation.
+  // Ignore continued momentum in the same direction to avoid skipping sections.
+  if (busy && direction === transitionDirection) return;
   go(active + direction, true, true);
 }
 
@@ -57,12 +59,13 @@ function settle() {
     scene.setAttribute('aria-hidden', String(index !== active));
   });
   busy = false;
+  transitionDirection = 0;
 }
 
 async function go(index, animate = true, fromScroll = false) {
   if (index < 0 || index >= scenes.length || index === active) return;
   const returning = index < active;
-  queuedDirection = null;
+  const direction = Math.sign(index - active);
   settle();
   const outgoing = scenes[active];
   const incoming = scenes[index];
@@ -84,6 +87,7 @@ async function go(index, animate = true, fromScroll = false) {
   }
   if (!animate || reducedMotion.matches || !incoming.animate) { settle(); return; }
   busy = true;
+  transitionDirection = direction;
   const { headings, content } = entranceTargets(incoming);
   // Follow the rendered columns, including responsive layouts and project grids.
   const frame = incoming.getBoundingClientRect();
@@ -112,10 +116,7 @@ async function go(index, animate = true, fromScroll = false) {
   const thisRun = running;
   await Promise.allSettled(thisRun.map(animation => animation.finished));
   if (running === thisRun) {
-    const queued = queuedDirection;
-    queuedDirection = null;
     settle();
-    if (queued !== null) requestStep(queued);
   }
 }
 
@@ -145,26 +146,39 @@ function canScroll(target, delta) {
 }
 let wheelTotal = 0;
 let gestureUsed = false;
-let scrolledWithinScene = false;
 let wheelDirection = 0;
 let wheelEnd;
+let readingSection = false;
+const wheelPixels = event => event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? scenes[active].clientHeight : 1);
 addEventListener('wheel', event => {
   if (event.ctrlKey || Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-  if (event.target.closest('.site-header')) return;
+  if (event.target.closest('.nav-links.open')) return;
   const direction = Math.sign(event.deltaY);
   if (!direction) return;
   // A deliberate reversal starts a new gesture, even during trackpad momentum.
   if (direction !== wheelDirection) {
-    wheelTotal = 0; gestureUsed = false; scrolledWithinScene = false;
+    wheelTotal = 0; gestureUsed = false; readingSection = false;
     wheelDirection = direction;
   }
   clearTimeout(wheelEnd);
-  wheelEnd = setTimeout(() => { wheelTotal = 0; gestureUsed = false; scrolledWithinScene = false; wheelDirection = 0; }, 150);
-  if (!busy && canScroll(event.target, event.deltaY)) { scrolledWithinScene = true; return; }
+  wheelEnd = setTimeout(() => { wheelTotal = 0; gestureUsed = false; wheelDirection = 0; readingSection = false; }, 150);
+  // Check the active scene, even if the event hit a fading-out scene or header.
+  const target = scenes[active].contains(event.target) ? event.target : scenes[active];
+  // Read every row in either direction before changing sections at an edge.
+  if (!busy && canScroll(target, event.deltaY)) {
+    wheelTotal = 0;
+    readingSection = true;
+    if (target === scenes[active] && !scenes[active].contains(event.target)) {
+      event.preventDefault();
+      scenes[active].scrollBy({ top: wheelPixels(event), behavior: 'instant' });
+    }
+    return;
+  }
   event.preventDefault();
-  if (gestureUsed || scrolledWithinScene) return;
-  wheelTotal += event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1);
-  if (Math.abs(wheelTotal) < 32) return;
+  if (gestureUsed) return;
+  wheelTotal += wheelPixels(event);
+  // Absorb the tail of an internal scroll at its boundary, without a sticky lock.
+  if (Math.abs(wheelTotal) < (readingSection ? 96 : 32)) return;
   gestureUsed = true;
   requestStep(direction);
 }, { passive: false });
@@ -186,7 +200,7 @@ addEventListener('keydown', event => {
 
 let touchStart;
 addEventListener('touchstart', event => {
-  touchStart = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY, consumed: false } : null;
+  touchStart = event.touches.length === 1 && !event.target.closest('.nav-links.open') ? { x: event.touches[0].clientX, y: event.touches[0].clientY, consumed: false } : null;
 }, { passive: true });
 addEventListener('touchmove', event => {
   if (!touchStart || event.touches.length !== 1 || event.target.closest('.nav-links.open')) return;
@@ -201,7 +215,7 @@ addEventListener('touchend', event => {
   touchStart = null;
 }, { passive: true });
 addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
-reducedMotion.addEventListener('change', () => { queuedDirection = null; settle(); });
+reducedMotion.addEventListener('change', settle);
 document.documentElement.classList.add('deck-enabled');
 window.scrollTo({ top: 0, behavior: 'instant' });
 settle();
