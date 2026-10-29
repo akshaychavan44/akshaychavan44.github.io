@@ -9,7 +9,7 @@
 .rewear-preview:hover img{transform:translateY(-10.4167%) scale(1.025)}
 
 
-@media(min-width:1100px){.projects-container{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.featured .project-title{font-size:21px}}
+@media(min-width:1100px){.projects-container{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}.featured .project-title{font-size:21px}}
 
 
 /* Header spans the viewport with a modest edge inset. */

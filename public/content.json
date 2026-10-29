@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "profile": {
+    "name": "Akshay Chavan",
+    "role": "Software Developer",
+    "eyebrow": "Software developer · India",
+    "headline": "Building thoughtful digital products, from interface to infrastructure.",
+    "intro": "I’m a full-stack developer who turns ideas into real, working products. I build scalable web applications using Next.js, Java, and PostgreSQL, with a focus on clean code, user experience, and real-world impact.",
+    "about": "I am a software developer with hands-on experience building production-ready web applications, enterprise CRM modules, and microservices architectures. I hold a Bachelor of Science in Information Technology from Saket College with an 8.70/10 CGPA and completed professional Java Full Stack Development certification at Quality Software Technologies. My background combines corporate operations experience at Accenture with practical full-stack development at Zootechx.",
+    "availability": "Open to full-time software developer roles",
+    "currentRole": "Software Developer Intern",
+    "company": "Zootechx",
+    "focus": "Full-stack development",
+    "focusDescription": "Building web applications, exploring new technologies, and continuously improving as a developer.",
+    "location": "Kalyan, Maharashtra, India",
+    "email": "akshaychavan44.ac@gmail.com",
+    "phone": "+91 7304763996",
+    "github": "https://github.com/akshaychavan44",
+    "linkedin": "",
+    "resume": "/Akshay-Chavan-Resume.pdf",
+    "contactTitle": "Let’s build something useful.",
+    "contactIntro": "I am open to software development opportunities. Feel free to reach out directly for collaborations, job opportunities, or just to say hello.",
+    "footerDescription": "Building web applications and turning ideas into real-world products.",
+    "seoDescription": "Akshay Chavan - Software Developer specializing in Java, Spring Boot, Next.js, React, Node.js, and PostgreSQL."
+  },
+  "projects": [
+    {
+      "id": "project-1",
+      "title": "Zootechx — CRM & ERP Platform",
+      "description": "A full-stack CRM/ERP platform with lead management, quotations, invoices, payments, and role-based dashboards for different teams.",
+      "image": "/images/zootechx.jpg",
+      "imageAlt": "Zootechx CRM dashboard",
+      "liveUrl": "https://zootechx.vercel.app/",
+      "githubUrl": "",
+      "category": "",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "PostgreSQL",
+        "Node.js",
+        "Tailwind CSS"
+      ],
+      "placement": "selected",
+      "visible": true
+    },
+    {
+      "id": "project-2",
+      "title": "DJ Impex — Textile Portfolio",
+      "description": "A responsive textile portfolio showcasing fabric collections, company information, and inquiries through reusable, modern interfaces.",
+      "image": "/images/dj-impex.jpg",
+      "imageAlt": "DJ Impex textile website",
+      "liveUrl": "https://dj-impex-taupe.vercel.app/",
+      "githubUrl": "",
+      "category": "",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Tailwind CSS",
+        "Vercel"
+      ],
+      "placement": "selected",
+      "visible": true
+    },
+    {
+      "id": "project-3",
+      "title": "RE—WEAR — Circular Fashion Initiative",
+      "description": "A sustainable fashion web application encouraging textile recycling and circular economy awareness through interactive educational flows.",
+      "image": "/images/rewear.png",
+      "imageAlt": "Rewear Project homepage with an underwater blue background and clothing drive photographs",
+      "liveUrl": "https://rewear-pi.vercel.app/",
+      "githubUrl": "",
+      "category": "",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+        "React"
+      ],
+      "placement": "selected",
+      "visible": true
+    },
+    {
+      "id": "project-4",
+      "title": "Aarti Collection — Kids’ Clothing",
+      "description": "A responsive kids’ clothing catalog with category pages, search, and filters by age and size. Product-level WhatsApp inquiries let customers check availability and place orders directly with the seller.",
+      "image": "/images/aarti-collection.jpg",
+      "imageAlt": "Aarti Collection kids clothing storefront",
+      "liveUrl": "https://aarti-collection.vercel.app/",
+      "githubUrl": "",
+      "category": "",
+      "tags": [
+        "Node.js",
+        "Express.js",
+        "React",
+        "Tailwind CSS",
+        "Neon PostgreSQL",
+        "JWT Authentication"
+      ],
+      "placement": "additional",
+      "visible": true
+    },
+    {
+      "id": "project-5",
+      "title": "Trizen — Service Provider Platform",
+      "description": "A service provider platform where professionals can register, create profiles, and list their services. A dedicated admin panel supports the management of provider listings.",
+      "image": "/images/service-provider.jpg",
+      "imageAlt": "Trizen service provider registration and partner portal",
+      "liveUrl": "https://client-xi-blond-60.vercel.app/",
+      "githubUrl": "",
+      "category": "",
+      "tags": [
+        "Provider Registration",
+        "Service Listings",
+        "Admin Panel",
+        "Vercel"
+      ],
+      "placement": "additional",
+      "visible": true
+    },
+    {
+      "id": "project-6",
+      "title": "CareerTrack – Job Application Tracker",
+      "description": "A full-stack application lifecycle tracking system with secure user authentication, application status management, and dashboard analytics.",
+      "image": "/images/careertrack-dashboard.png",
+      "imageAlt": "CareerTrack dashboard with application statistics, an application form, and interview tracking",
+      "liveUrl": "https://careertrack-frontend-rho.vercel.app/",
+      "githubUrl": "https://github.com/akshaychavan44/careertrack-fullstack",
+      "category": "Full Stack",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "React.js",
+        "MongoDB",
+        "JWT Auth",
+        "REST APIs"
+      ],
+      "placement": "selected",
+      "visible": true
+    },
+    {
+      "id": "project-7",
+      "title": "E-Commerce Management System",
+      "description": "A distributed backend architecture for e-commerce operations, organized into independent services for product catalog, shopping cart, orders, and payments.",
+      "image": "",
+      "imageAlt": "",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/akshaychavan44/ecom",
+      "category": "Backend",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Microservices",
+        "MongoDB",
+        "REST APIs",
+        "Postman"
+      ],
+      "placement": "more",
+      "visible": true
+    },
+    {
+      "id": "project-8",
+      "title": "Jewelrex",
+      "description": "A full-stack luxury fine jewelry marketplace and bespoke commission platform connecting collectors with independent jewelers. Supports 0% commission and direct communication between clients and jewelers.",
+      "image": "",
+      "imageAlt": "",
+      "liveUrl": "",
+      "githubUrl": "",
+      "category": "Full Stack Developer",
+      "tags": [
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Neon Serverless PostgreSQL",
+        "Cloud Storage",
+        "Tailwind CSS"
+      ],
+      "placement": "more",
+      "visible": true
+    },
+    {
+      "id": "project-9",
+      "title": "Ticket Management System",
+      "description": "A support ticket tracking system allowing users to log, prioritize, assign, and resolve customer issues through a clean interface.",
+      "image": "",
+      "imageAlt": "",
+      "liveUrl": "",
+      "githubUrl": "https://github.com/akshaychavan44/Ticket-Management-System",
+      "category": "Full Stack",
+      "tags": [
+        "Node.js",
+        "Express.js",
+        "React.js",
+        "MongoDB Atlas",
+        "Tailwind CSS",
+        "Render"
+      ],
+      "placement": "more",
+      "visible": true
+    }
+  ]
+}
