@@ -1,8 +1,11 @@
 import { setupLiquidNav } from './portfolio-motion.js';
+import { setupNavLetterFlip } from './nav-letter-flip.js';
+import { setupHeadingTones } from './heading-tones.js';
 
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 setupLiquidNav(document.querySelector('.site-header'));
+setupNavLetterFlip(navLinks);
 function closeMenu() { navLinks.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); }
 menuToggle.addEventListener('click', () => { const open = navLinks.classList.toggle('open'); menuToggle.setAttribute('aria-expanded', String(open)); });
 navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
@@ -192,3 +195,5 @@ document.addEventListener('focusin', event => {
   const reveal = event.target.closest('.motion-reveal');
   if (reveal) reveal.classList.add('is-visible');
 });
+
+setupHeadingTones();

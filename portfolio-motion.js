@@ -1,3 +1,5 @@
+import { isSlateWord, toneHeading } from './heading-tones.js';
+
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 export function setupLiquidNav(header) {
@@ -5,31 +7,12 @@ export function setupLiquidNav(header) {
   const surface = document.createElement('div');
   surface.className = 'nav-liquid-surface';
   surface.setAttribute('aria-hidden', 'true');
-  const highlight = document.createElement('span');
-  highlight.className = 'nav-liquid-highlight';
-  surface.append(highlight);
   header.prepend(surface);
-  let hoverLink = null;
   const update = () => {
-    const link = hoverLink || nav.querySelector('a:focus-visible') || nav.querySelector('a[aria-current]');
-    const rect = link?.getBoundingClientRect();
     const bounds = header.getBoundingClientRect();
-    const visible = rect && rect.width > 0 && rect.height > 0;
-    highlight.classList.toggle('is-visible', Boolean(visible));
-    if (!visible) return;
-    highlight.style.width = `${rect.width}px`;
-    highlight.style.height = `${rect.height}px`;
-    highlight.style.transform = `translate(${rect.left - bounds.left}px, ${rect.top - bounds.top}px)`;
+    const menuBounds = nav.getBoundingClientRect();
+    surface.style.height = `${Math.max(bounds.height, menuBounds.bottom - bounds.top)}px`;
   };
-  nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('pointerenter', event => {
-      if (event.pointerType === 'touch') return;
-      hoverLink = link; update();
-    });
-    link.addEventListener('pointerleave', () => { hoverLink = null; update(); });
-  });
-  nav.addEventListener('focusin', update);
-  nav.addEventListener('focusout', () => requestAnimationFrame(update));
   new MutationObserver(update).observe(nav, { subtree: true, attributes: true, attributeFilter: ['aria-current', 'class'] });
   new ResizeObserver(update).observe(header);
   window.addEventListener('resize', update);
@@ -44,36 +27,44 @@ export function setupLiquidNav(header) {
     ripple.style.left = `${x}px`;
     ripple.style.top = `${y}px`;
     // Bound simultaneous waves during rapid clicks.
-    if (surface.children.length > 6) surface.children[1].remove();
+    if (surface.children.length >= 6) surface.firstElementChild.remove();
     surface.append(ripple);
     ripple.animate([
       { transform: 'translate(-50%, -50%) scale(.08, .2)', opacity: .85 },
       { transform: 'translate(-50%, -50%) scale(1, .75)', opacity: .55, offset: .45 },
       { transform: 'translate(-50%, -50%) scale(1.65, 1.1)', opacity: 0 }
-    ], { duration: 950, easing: 'cubic-bezier(.16,1,.3,1)' }).finished.finally(() => ripple.remove());
+    ], { duration: 950, easing: 'cubic-bezier(.16,1,.3,1)' }).finished.then(() => ripple.remove(), () => ripple.remove());
     requestAnimationFrame(update);
   });
   update();
 }
 
 export function setupNameIntro() {
-  let seen = false;
-  try { seen = sessionStorage.getItem('portfolio-intro-seen') === '1'; } catch { /* Storage can be disabled. */ }
-  if (seen || reducedMotion.matches || location.hash && location.hash !== '#home') return () => {};
+  if (reducedMotion.matches) return () => {};
   const overlay = document.createElement('div');
   overlay.className = 'name-intro';
   overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true');
   overlay.setAttribute('aria-label', 'Welcome to my portfolio');
+  const backdrop = document.createElement('div');
+  backdrop.className = 'name-intro-backdrop';
+  backdrop.setAttribute('aria-hidden', 'true');
   const name = document.createElement('div');
   name.className = 'name-intro-title';
   const caption = document.createElement('p');
   caption.className = 'name-intro-caption';
-  caption.textContent = 'Software developer · Portfolio';
+  const role = document.createElement('span');
+  role.className = 'name-intro-role';
+  role.textContent = 'Software Developer';
+  toneHeading(role);
+  const label = document.createElement('span');
+  label.className = 'name-intro-label';
+  label.textContent = 'Portfolio';
+  caption.append(role, label);
   const skip = document.createElement('button');
   skip.className = 'name-intro-skip';
   skip.textContent = 'Skip intro ↗';
-  overlay.append(name, caption, skip);
+  overlay.append(backdrop, name, caption, skip);
   document.body.append(overlay);
   const page = [...document.querySelectorAll('.site-header, main, .site-footer')];
   const previousInert = page.map(element => element.inert);
@@ -81,6 +72,7 @@ export function setupNameIntro() {
   page.forEach(element => { element.inert = true; });
   document.documentElement.classList.add('intro-playing');
   let finished = false;
+  let keyboardInteraction = false;
   let animations = [];
   const cleanup = () => {
     if (finished) return;
@@ -92,11 +84,10 @@ export function setupNameIntro() {
     page.forEach((element, i) => { element.inert = previousInert[i]; });
     document.documentElement.classList.remove('intro-playing');
     reducedMotion.removeEventListener('change', onMotionChange);
-    if (restoreFocus) {
+    if (restoreFocus && (keyboardInteraction || previousFocus !== document.body)) {
       const target = previousFocus !== document.body && previousFocus?.isConnected ? previousFocus : document.querySelector('.brand');
       target?.focus({ preventScroll: true });
     }
-    try { sessionStorage.setItem('portfolio-intro-seen', '1'); } catch { /* Optional persistence. */ }
   };
   const onMotionChange = () => { if (reducedMotion.matches) cleanup(); };
   reducedMotion.addEventListener('change', onMotionChange);
@@ -104,6 +95,7 @@ export function setupNameIntro() {
   skip.addEventListener('click', cleanup);
   overlay.addEventListener('wheel', event => { event.preventDefault(); event.stopPropagation(); }, { passive: false });
   overlay.addEventListener('keydown', event => {
+    keyboardInteraction = true;
     event.stopPropagation();
     if (event.key === 'Escape') cleanup();
     if (event.key === 'Tab') { event.preventDefault(); skip.focus(); }
@@ -111,15 +103,18 @@ export function setupNameIntro() {
   skip.focus({ preventScroll: true });
   // Resolve the display name again after managed portfolio content loads.
   const renderName = () => {
+    overlay.style.removeProperty('--intro-name-size');
     name.replaceChildren();
     const label = document.querySelector('.brand').textContent.trim().replace(/\.$/, '');
     name.setAttribute('aria-label', label);
-    label.split(/\s+/).forEach(word => {
+    const words = label.split(/\s+/);
+    words.forEach((word, wordIndex) => {
       const row = document.createElement('span');
       row.className = 'name-intro-word';
       row.setAttribute('aria-hidden', 'true');
       [...word].forEach(letter => {
         const glyph = document.createElement('span');
+        if (isSlateWord(wordIndex, words.length)) glyph.className = 'heading-tone-muted';
         glyph.textContent = letter;
         row.append(glyph);
       });
@@ -127,7 +122,7 @@ export function setupNameIntro() {
     });
     // Fit long names and narrow displays without clipping the entry pose.
     const available = innerWidth * .88;
-    if (name.scrollWidth > available) name.style.fontSize = `${parseFloat(getComputedStyle(name).fontSize) * available / name.scrollWidth}px`;
+    if (name.scrollWidth > available) overlay.style.setProperty('--intro-name-size', `${parseFloat(getComputedStyle(name).fontSize) * available / name.scrollWidth}px`);
   };
   renderName();
   return async () => {
@@ -138,22 +133,30 @@ export function setupNameIntro() {
       { opacity: 0, transform: 'translateY(45%) scaleY(.85)' },
       { opacity: 1, transform: 'translateY(0) scaleY(1)' }
     ], { duration: 700, delay: Math.min(i * 35, 420), easing, fill: 'both' }));
-    animations.push(caption.animate([{ opacity: 0 }, { opacity: .65 }], { duration: 650, delay: 300, fill: 'both' }));
+    animations.push(caption.animate([{ opacity: 0 }, { opacity: .85 }], { duration: 650, delay: 300, fill: 'both' }));
     try {
       await Promise.all(animations.map(animation => animation.finished));
       if (finished) return;
       const entrance = [...animations];
       animations.push(name.animate([
-        { transform: 'scale(1)', opacity: 1 },
-        { opacity: 1, offset: .25 },
-        { transform: 'scale(3.8)', opacity: 0 }
+        { transform: 'scale(1)', opacity: 1, webkitTextStrokeWidth: '.75px' },
+        { opacity: 1, offset: .72 },
+        { transform: 'scale(3.8)', opacity: 0, webkitTextStrokeWidth: '.25px' }
       ], { delay: 260, duration: 1050, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' }));
-      animations.push(caption.animate([{ opacity: .65 }, { opacity: 0 }], { delay: 260, duration: 350, fill: 'forwards' }));
-      animations.push(overlay.animate([{ backgroundColor: '#101214' }, { backgroundColor: '#10121400' }], { delay: 650, duration: 660, easing, fill: 'forwards' }));
+      name.querySelectorAll('.name-intro-word > span').forEach(glyph => {
+        animations.push(glyph.animate([
+          { webkitTextFillColor: getComputedStyle(glyph).color },
+          { webkitTextFillColor: 'transparent', offset: .2 },
+          { webkitTextFillColor: 'transparent' }
+        ], { delay: 260, duration: 1050, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' }));
+      });
+      animations.push(caption.animate([{ opacity: .85 }, { opacity: 0 }], { duration: 220, fill: 'forwards' }));
+      animations.push(skip.animate([{ opacity: 1 }, { opacity: 0 }], { delay: 260, duration: 350, fill: 'forwards' }));
+      animations.push(backdrop.animate([{ opacity: 1 }, { opacity: 0 }], { delay: 200, duration: 450, easing, fill: 'forwards' }));
       const content = [document.querySelector('.site-header'), document.querySelector('.deck-scene:not([hidden])') || document.querySelector('main')];
       content.forEach(element => animations.push(element.animate([
         { opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }
-      ], { delay: 700, duration: 610, easing, fill: 'both' })));
+      ], { delay: 200, duration: 650, easing, fill: 'both' })));
       await Promise.all(animations.filter(animation => !entrance.includes(animation)).map(animation => animation.finished));
     } catch { /* Skip or reduced motion cancels the current sequence. */ }
     finally { cleanup(); }

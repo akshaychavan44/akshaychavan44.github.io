@@ -1,7 +1,8 @@
 /* Keep the established component styles; add glass and section motion only. */
 :root { --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif; --serif:var(--sans); --header-height:calc(67px + env(safe-area-inset-top,0px)); }
 body { isolation:isolate; }
-body::before { content:''; position:fixed; inset:0; z-index:-1; background:radial-gradient(ellipse at 80% 20%,#eceff4 0,transparent 55%),#fafafa; pointer-events:none; }
+:root { --portfolio-background:radial-gradient(ellipse at 80% 20%,#eceff4 0,transparent 55%),#fafafa; }
+body::before { content:''; position:fixed; inset:0; z-index:-1; background:var(--portfolio-background); pointer-events:none; }
 .site-header {
   background:transparent;
   backdrop-filter:blur(24px) saturate(160%);
