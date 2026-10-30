@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Portfolio Studio — Admin</title><link rel="stylesheet" href="/admin.css"></head>
+<body>
+  <div class="studio">
+    <aside class="sidebar">
+      <a class="studio-brand" href="/admin.html"><span class="brand-mark">a.</span><span>Portfolio<span class="brand-sub">STUDIO / LOCAL EDITOR</span></span></a>
+      <p class="nav-label">WORKSPACE</p>
+      <nav aria-label="Admin navigation">
+        <button type="button" data-view="overview" aria-current="page"><span>◫</span> Overview</button>
+        <button type="button" data-view="projects"><span>▦</span> Projects <span id="project-count" class="nav-count">—</span></button>
+        <button type="button" data-view="profile"><span>◎</span> Profile & copy</button>
+        <button type="button" data-view="links"><span>↗</span> Links & résumé</button>
+        <button type="button" data-view="backups"><span>↺</span> Backups</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="local-dot"></span> Running on your computer<p>Changes save to your project.<br>Deploy to update your public site.</p><a href="/" target="_blank" rel="noopener">Open portfolio ↗</a></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span>YOUR PORTFOLIO <span class="breadcrumb">/ <span id="current-view">Overview</span></span></span><div class="top-actions"><span id="save-state">Connecting…</span><button type="button" id="save" class="button primary" disabled>Save changes <span>↗</span></button><button type="button" id="logout" class="button">Log out</button></div></header>
+      <main id="admin-main" tabindex="-1"><div class="loading">Opening your workspace…</div></main>
+      <div id="notice" role="status" aria-live="polite" hidden></div>
+    </div>
+  </div>
+  <dialog id="project-dialog" aria-labelledby="dialog-title"><form id="project-form"><div class="dialog-top"><div><p class="eyebrow">YOUR WORK</p><h2 id="dialog-title">Edit project</h2></div><button type="button" class="icon-button" id="close-dialog" aria-label="Close editor">×</button></div><div id="project-fields"></div><div class="dialog-footer"><button type="button" class="button" id="cancel-project">Cancel</button><button type="submit" class="button primary">Apply to draft</button></div></form></dialog>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title"><form method="dialog"><h2 id="confirm-title">Confirm change</h2><p id="confirm-message"></p><div class="dialog-footer"><button class="button" value="cancel">Keep editing</button><button class="button primary" value="confirm">Confirm</button></div></form></dialog>
+  <script type="module" src="/admin.js"></script>
+</body></html>

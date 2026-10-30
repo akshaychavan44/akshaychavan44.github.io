@@ -93,7 +93,7 @@ async function go(index, animate = true, fromScroll = false) {
   const frame = incoming.getBoundingClientRect();
   const midpoint = frame.left + frame.width / 2;
   const stacked = matchMedia('(max-width: 767px)').matches;
-  const distance = stacked ? 24 : 32;
+  const distance = stacked ? 24 : 42;
   const entrances = content.map(element => {
     const bounds = element.getBoundingClientRect();
     // Preserve the original column's direction when it stacks below on a phone.
@@ -102,16 +102,16 @@ async function go(index, animate = true, fromScroll = false) {
       : bounds.left + bounds.width / 2 > midpoint + 1;
     return { element, offset: right ? distance : -distance };
   });
-  const timing = { duration: 780, fill: 'both', easing: 'cubic-bezier(.22,.68,.25,1)' };
+  const timing = { duration: 1400, fill: 'both', easing: 'cubic-bezier(.25,.46,.35,1)' };
   running = [
-    outgoing.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards', easing: 'ease-out' }),
-    incoming.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 170, delay: 210, fill: 'both' }),
+    outgoing.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards', easing: 'ease-in-out' }),
+    incoming.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 340, delay: 300, fill: 'both', easing: 'ease-in-out' }),
     ...headings.map((element, index) => element.animate([
-      { opacity: 0, transform: 'translateY(-20px)' }, { opacity: 1, transform: 'translateY(0)' }
-    ], { ...timing, delay: 220 + Math.min(index * 50, 100) })),
+      { opacity: 0, transform: 'translateY(-30px)' }, { opacity: 1, transform: 'translateY(0)' }
+    ], { ...timing, delay: 320 + Math.min(index * 90, 180) })),
     ...entrances.map(({ element, offset }, index) => element.animate([
       { opacity: 0, transform: `translateX(${offset}px)` }, { opacity: 1, transform: 'translateX(0)' }
-    ], { ...timing, delay: 300 + Math.min(index * 50, 150) }))
+    ], { ...timing, delay: 440 + Math.min(index * 85, 340) }))
   ];
   const thisRun = running;
   await Promise.allSettled(thisRun.map(animation => animation.finished));

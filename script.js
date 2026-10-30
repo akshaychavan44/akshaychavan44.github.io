@@ -1,5 +1,8 @@
+import { setupLiquidNav } from './portfolio-motion.js';
+
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
+setupLiquidNav(document.querySelector('.site-header'));
 function closeMenu() { navLinks.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); }
 menuToggle.addEventListener('click', () => { const open = navLinks.classList.toggle('open'); menuToggle.setAttribute('aria-expanded', String(open)); });
 navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
@@ -7,10 +10,11 @@ document.addEventListener('keydown', event => { if(event.key === 'Escape' && nav
 let toastTimeout;
 document.getElementById('copyEmailBtn').addEventListener('click', async () => {
   const toast = document.getElementById('toast');
+  const email = document.getElementById('copyEmailBtn').dataset.email || document.querySelector('a[href^="mailto:"]').href.slice(7);
   try {
-    await navigator.clipboard.writeText('akshaychavan44.ac@gmail.com');
+    await navigator.clipboard.writeText(email);
     toast.textContent = 'Email address copied to clipboard.';
-  } catch { toast.textContent = 'Could not copy. Email: akshaychavan44.ac@gmail.com'; }
+  } catch { toast.textContent = `Could not copy. Email: ${email}`; }
   toast.classList.add('show'); clearTimeout(toastTimeout); toastTimeout = setTimeout(() => toast.classList.remove('show'), 4000);
 });
 
@@ -95,9 +99,9 @@ updateActiveSection();
     running.forEach(animation => animation.cancel());
     running = [];
     if (motion.matches || !panel.animate) return;
-    running.push(panel.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 550, easing: 'cubic-bezier(.22,1,.36,1)' }));
+    running.push(panel.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 950, easing: 'cubic-bezier(.25,.46,.35,1)' }));
     panel.querySelectorAll('.skill-tag').forEach((skill, index) => {
-      running.push(skill.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, delay: 65 + index * 45, fill: 'backwards', easing: 'ease-out' }));
+      running.push(skill.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 750, delay: 100 + Math.min(index * 65, 390), fill: 'backwards', easing: 'ease-in-out' }));
     });
   }
   const buttons = groups.map((group, index) => {

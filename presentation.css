@@ -15,6 +15,98 @@ body::before { content:''; position:fixed; inset:0; z-index:-1; background:radia
 .hero-line:not(:last-child)::after { content:' '; }
 .project-title a { overflow:visible; }
 
+/* Monochrome glass hover and one shared underline for hover/current location. */
+.site-header .nav-links a {
+  padding-inline:10px;
+  border-radius:6px;
+  transition:background-color .45s ease,color .45s ease;
+}
+.nav-flip-label { display:inline-flex; white-space:nowrap; vertical-align:bottom; }
+.nav-flip-letter { display:inline-block; perspective:160px; }
+.nav-flip-rotor {
+  display:inline-block;
+  position:relative;
+  transform-style:preserve-3d;
+  transform-origin:50% 50%;
+}
+.nav-flip-front,.nav-flip-back {
+  display:inline-block;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.nav-flip-back { position:absolute; inset:0; transform:rotateX(180deg); }
+.is-flipping .nav-flip-rotor { will-change:transform; }
+.site-header .nav-links a::after {
+  display:block;
+  left:10px;
+  right:10px;
+  width:auto;
+  bottom:5px;
+  height:1px;
+  transform:scaleX(0);
+  transform-origin:right;
+  transition:transform .6s cubic-bezier(.25,.46,.35,1);
+}
+.site-header .nav-links a[aria-current] { box-shadow:none; }
+.site-header .nav-links a[aria-current]::after,
+.site-header .nav-links a:focus-visible::after { transform:scaleX(1); transform-origin:left; }
+.site-header .nav-links a:focus-visible { background:#11111106; }
+@media(hover:hover) and (pointer:fine) {
+  .site-header .nav-links a:hover { background:#11111106; color:#111; }
+  .site-header .nav-links a:hover::after { transform:scaleX(1); transform-origin:left; }
+}
+@media(max-width:767px) {
+  .site-header .nav-links a::after { left:10px; right:auto; width:28px; bottom:7px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .site-header .nav-links a,.site-header .nav-links a::after { transition:none; }
+}
+
+/* Give each chapter more presence while keeping long sections scrollable. */
+.section h2 {
+  font-size:clamp(28px,2.8vw,40px);
+  line-height:1.2;
+  letter-spacing:-.035em;
+  text-transform:none;
+  font-weight:550;
+  color:var(--ink);
+  margin-bottom:28px;
+}
+.section-heading h2 span { font-size:13px; letter-spacing:.02em; color:var(--muted); font-weight:400; }
+.hero h1 { font-size:clamp(40px,4.4vw,66px); letter-spacing:-.04em; }
+#about .about-title,.education-heading,.contact-title { font-size:clamp(36px,4vw,58px); line-height:1.15; }
+.project-title,.featured .project-title,.more-projects .project-title { font-size:clamp(23px,2vw,28px); line-height:1.25; }
+.exp-title { font-size:clamp(24px,2.2vw,31px); line-height:1.3; }
+.edu-title,.hero-aside h3 { font-size:clamp(22px,1.9vw,27px); line-height:1.3; }
+.skills-panel h3 { font-size:clamp(36px,4vw,56px); }
+.hero-intro,.section-lead,.project-desc,.exp-bullets li,.skills-panel-description,.connect-intro>p,.hero-aside p:not(.eyebrow) {
+  text-align:justify;
+  text-justify:inter-word;
+  hyphens:auto;
+}
+.project-desc,.exp-bullets,.connect-intro>p { font-size:clamp(15px,1.2vw,17px); line-height:1.8; }
+.exp-duration { font-size:15px; }
+.exp-project-name { font-size:14px; line-height:1.65; }
+.experience-item { column-gap:clamp(28px,4vw,58px); row-gap:18px; padding-bottom:26px; }
+.experience-item+.experience-item { padding-top:26px; }
+.exp-header-row { gap:10px; }
+.exp-bullets li+li { margin-top:12px; }
+.exp-tech-row { align-content:start; gap:8px; }
+@media(min-width:768px) {
+  #experience { min-height:100%; display:flex; align-items:center; }
+  #experience .experience-list { width:100%; }
+}
+@media(max-width:767px) {
+  .section h2 { font-size:29px; margin-bottom:24px; }
+  .hero h1 { font-size:clamp(36px,8.4vw,54px); }
+  .exp-title { font-size:25px; }
+  .experience-item { row-gap:16px; padding-bottom:28px; }
+  .experience-item+.experience-item { padding-top:28px; }
+  .exp-bullets { line-height:1.8; }
+  .section-heading h2 span { display:block; margin-top:9px; }
+  .section-heading h2 { display:block; }
+}
+
 /* Section transitions affect motion only; section markup and layout stay intact. */
 .deck-enabled { overflow:hidden; height:100%; scroll-behavior:auto; }
 .deck-enabled body { height:100%; overflow:hidden; overscroll-behavior:none; }
