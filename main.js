@@ -11,4 +11,5 @@ if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
 const revealPortfolio = setupNameIntro();
 contentReady.then(async () => {
   await import('./script.js');
+  await import('./deck.js');
 }).finally(revealPortfolio);

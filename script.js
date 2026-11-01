@@ -62,6 +62,7 @@ const sectionLinks = [...navLinks.querySelectorAll('a')];
 const trackedSections = sectionLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
 let navUpdatePending = false;
 function updateActiveSection() {
+  if (document.documentElement.classList.contains('deck-enabled')) { navUpdatePending = false; return; }
   const marker = window.innerHeight * 0.35;
   let active = trackedSections.find(section => section.getBoundingClientRect().top <= marker && section.getBoundingClientRect().bottom > marker);
   const skills = document.getElementById('skills');
