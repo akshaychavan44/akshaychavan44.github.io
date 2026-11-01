@@ -114,15 +114,12 @@ body::before { content:''; position:fixed; inset:0; z-index:-1; background:var(-
 .process-heading h3 { font:600 20px/1.3 var(--sans); letter-spacing:-.025em; }
 .process-heading > span { font-size:12px; color:var(--muted); }
 .process-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; list-style:none; padding:0; margin:0; }
-.process-card { padding:18px 22px; border:1px solid var(--process-border); border-radius:14px; background:var(--process-bg); color:var(--process-ink); }
-.process-plan { --process-bg:#eae4ff; --process-border:#d8ccfa; --process-ink:#42316e; }
-.process-build { --process-bg:#e0f2e8; --process-border:#c4e3d1; --process-ink:#23533f; }
-.process-refine { --process-bg:#ffeadb; --process-border:#f3d2bb; --process-ink:#794528; }
+.process-card { padding:18px 22px; border:1px solid var(--line); border-radius:14px; background:#fff; color:var(--ink); }
 .process-card-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
 .process-number { font-size:10px; font-weight:700; letter-spacing:.12em; }
 .process-card-top svg { width:24px; height:24px; }
 .process-card h4 { font:600 clamp(18px,1.6vw,22px)/1.3 var(--sans); letter-spacing:-.025em; margin:0 0 8px; }
-.process-card p { font-size:14px; line-height:1.6; color:var(--process-ink); }
+.process-card p { font-size:14px; line-height:1.6; color:var(--muted); }
 .process-card .heading-tone-muted { color:inherit; }
 @media(max-width:767px) {
   #about .build-process { margin-top:28px; }
