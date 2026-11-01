@@ -1,5 +1,8 @@
 import { contentReady } from './portfolio-content.js';
 import { setupNameIntro } from './portfolio-motion.js';
+import { setupMinimalCursor } from './minimal-cursor.js';
+
+setupMinimalCursor();
 
 // Refresh starts a fresh visit at the introduction, rather than the last chapter.
 if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
