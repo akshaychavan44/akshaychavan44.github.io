@@ -1,6 +1,5 @@
 import { setupLiquidNav } from './portfolio-motion.js';
 import { setupNavLetterFlip } from './nav-letter-flip.js';
-import { setupHeadingTones } from './heading-tones.js';
 
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
@@ -63,7 +62,6 @@ const sectionLinks = [...navLinks.querySelectorAll('a')];
 const trackedSections = sectionLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
 let navUpdatePending = false;
 function updateActiveSection() {
-  if (document.documentElement.classList.contains('deck-enabled')) { navUpdatePending = false; return; }
   const marker = window.innerHeight * 0.35;
   let active = trackedSections.find(section => section.getBoundingClientRect().top <= marker && section.getBoundingClientRect().bottom > marker);
   const skills = document.getElementById('skills');
@@ -195,5 +193,3 @@ document.addEventListener('focusin', event => {
   const reveal = event.target.closest('.motion-reveal');
   if (reveal) reveal.classList.add('is-visible');
 });
-
-setupHeadingTones();

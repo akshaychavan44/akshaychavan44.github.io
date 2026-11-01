@@ -1,6 +1,7 @@
 /* Liquid feedback lives under the labels and never intercepts navigation. */
 .heading-tone-text { display:inline; color:inherit !important; font:inherit !important; letter-spacing:inherit !important; }
-.heading-tone-muted { color:#62666d !important; font:inherit !important; letter-spacing:inherit !important; }
+.heading-tone-muted { color:inherit !important; font:inherit !important; letter-spacing:inherit !important; }
+:is(h1,h2,h3,h4,h5,h6) span,.exp-title .exp-company,.section-heading h2 span { color:inherit; }
 :is(h1,h2,h3,h4,h5,h6,.brand,.skills-tab-label) :is(.heading-tone-text,.heading-tone-muted) { display:inline !important; margin:0 !important; transform:none !important; flex-shrink:1 !important; min-width:0; }
 .site-header { isolation:isolate; }
 .nav-liquid-surface { position:absolute; inset:0; z-index:-1; overflow:hidden; pointer-events:none; }

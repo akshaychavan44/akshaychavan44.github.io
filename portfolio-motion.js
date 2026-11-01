@@ -1,4 +1,3 @@
-import { isSlateWord, toneHeading } from './heading-tones.js';
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -56,7 +55,6 @@ export function setupNameIntro() {
   const role = document.createElement('span');
   role.className = 'name-intro-role';
   role.textContent = 'Software Developer';
-  toneHeading(role);
   const label = document.createElement('span');
   label.className = 'name-intro-label';
   label.textContent = 'Portfolio';
@@ -108,13 +106,12 @@ export function setupNameIntro() {
     const label = document.querySelector('.brand').textContent.trim().replace(/\.$/, '');
     name.setAttribute('aria-label', label);
     const words = label.split(/\s+/);
-    words.forEach((word, wordIndex) => {
+    words.forEach(word => {
       const row = document.createElement('span');
       row.className = 'name-intro-word';
       row.setAttribute('aria-hidden', 'true');
       [...word].forEach(letter => {
         const glyph = document.createElement('span');
-        if (isSlateWord(wordIndex, words.length)) glyph.className = 'heading-tone-muted';
         glyph.textContent = letter;
         row.append(glyph);
       });
