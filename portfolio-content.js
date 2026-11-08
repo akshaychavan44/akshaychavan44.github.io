@@ -56,6 +56,25 @@ export function renderContent(data) {
     container.replaceChildren(...items.map(project => projectCard(project, ++index, node, link)));
   }
   document.querySelector('.s-work__actions').hidden = !groups[1][1].length;
+
+  // Red closing section: a tilted wall of project screenshots in three drifting columns.
+  // Decorative only (the wall is aria-hidden), so images carry empty alt text.
+  const wall = document.querySelector('.s-cta__wall');
+  const shots = visible.filter(project => project.image).map(project => project.image);
+  if (wall) {
+    wall.replaceChildren(...(shots.length ? [0, 1, 2] : []).map(column => {
+      const col = node('div', 's-cta__col');
+      const order = shots.map((_, i) => shots[(i + column * 2) % shots.length]);
+      // Two copies so the drift can loop by exactly half the column.
+      [...order, ...order].forEach(src => {
+        const tile = node('div', 's-cta__tile');
+        const image = document.createElement('img');
+        image.src = src; image.alt = ''; image.loading = 'lazy'; image.width = 1440; image.height = 900;
+        tile.append(image); col.append(tile);
+      });
+      return col;
+    }));
+  }
 }
 
 function projectCard(project, index, node, link) {

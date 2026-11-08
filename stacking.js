@@ -9,7 +9,7 @@
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const revealSelector = [
   '.s-head', '.s-marquee', '.s-project', '.s-work__actions', '.s-built-label', '.s-built', '.s-step',
-  '.s-job', '.s-about__copy', '.developer-visual', '.s-edu__row',
+  '.s-job', '.s-about__copy', '.developer-visual', '.s-edu__row', '.s-reason', '.s-cta__inner',
   '.editorial-label', '.connect-intro', '.connect-details'
 ].join(',');
 
