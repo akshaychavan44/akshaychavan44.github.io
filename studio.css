@@ -222,13 +222,13 @@ main > #contact { padding-bottom:clamp(48px,8vh,96px); }
 main > [data-tone=light] { --s-text:var(--s-paper-ink); --s-text-muted:#000000a3; --s-line:#0000001a; }
 main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-line:#ffffff1f; }
 #projects,#experience,#education { background:var(--s-white); color:var(--s-paper-ink); }
-#skills,#process,#about,#why {
+#skills,#about {
   --ink:var(--s-ink); --muted:var(--s-muted); --line:#ffffff1f;
   background:var(--s-black); color:var(--s-ink);
 }
-:is(#skills,#projects,#process,#experience,#about,#education,#why,#cta,#contact) { font-family:var(--s-font); }
-:is(#skills,#projects,#process,#experience,#about,#education,#why,#cta) :is(h2,h3) { color:inherit; font-family:var(--s-font); }
-:is(#skills,#projects,#process,#about,#why,#cta) :focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+:is(#skills,#projects,#experience,#about,#education,#cta,#contact) { font-family:var(--s-font); }
+:is(#skills,#projects,#experience,#about,#education,#cta) :is(h2,h3) { color:inherit; font-family:var(--s-font); }
+:is(#skills,#projects,#about,#cta) :focus-visible { outline:2px solid currentColor; outline-offset:3px; }
 
 /* Header follows the panel underneath it (data-tone set by stacking.js). */
 .site-header { transition:background-color .4s ease,border-color .4s ease,color .4s ease; }
@@ -255,12 +255,12 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 .s-head { margin-bottom:clamp(40px,7vh,88px); }
 .s-head--split { display:flex; align-items:flex-end; justify-content:space-between; gap:24px 48px; flex-wrap:wrap; }
 .s-head .s-eyebrow { color:var(--s-text-muted); }
-:is(#skills,#projects,#process,#experience,#about,#education,#why) .s-title {
+:is(#skills,#projects,#experience,#about,#education) .s-title {
   display:block; max-width:none; margin:14px 0 0; text-align:left; text-transform:none;
   font-family:var(--s-font); font-size:clamp(44px,7vw,112px); font-weight:400;
   line-height:.95; letter-spacing:-.05em; color:inherit;
 }
-:is(#skills,#projects,#process,#experience,#about,#education,#why) .s-title::after { display:none; }
+:is(#skills,#projects,#experience,#about,#education) .s-title::after { display:none; }
 .s-head__note { max-width:40ch; margin:0; font-size:15px; line-height:1.6; color:var(--s-text-muted); }
 
 /* Tags and text links. */
@@ -342,28 +342,6 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 .s-project--text .s-project__body { padding:clamp(24px,3vw,40px); border:1px solid var(--s-line); border-radius:clamp(18px,2vw,28px); }
 .s-work__actions { display:flex; justify-content:center; margin-top:clamp(40px,5vw,72px); }
 
-/* How I build: a flowing list of what I've built, then steps along a red progress line. */
-.s-built-label { margin:0 0 18px; font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--s-text-muted); }
-.s-built {
-  display:flex; flex-wrap:wrap; margin:0 0 clamp(64px,11vh,128px); padding:0; list-style:none;
-  font-size:clamp(28px,4.2vw,64px); font-weight:300; line-height:1.18; letter-spacing:-.045em;
-}
-.s-built li { display:inline-flex; align-items:center; }
-.s-built li:not(:last-child)::after { content:''; width:.15em; height:.15em; margin:0 .42em; border-radius:50%; background:var(--s-red); }
-.s-steps {
-  position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(24px,3vw,48px);
-  margin:0; padding:36px 0 0; list-style:none;
-}
-.s-steps::before,.s-steps::after { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:var(--s-line); }
-.s-steps::after { height:2px; top:-.5px; background:var(--s-red); transform:scaleX(var(--progress,0)); transform-origin:left; }
-.s-step { position:relative; opacity:.4; transition:opacity .6s ease; }
-.s-step.is-active { opacity:1; }
-.s-step::before { content:''; position:absolute; top:-41px; left:0; width:10px; height:10px; border-radius:50%; background:#3a3a38; transition:background-color .4s ease; }
-.s-step.is-active::before { background:var(--s-red); }
-.s-step__num { font-size:11px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--s-text-muted); }
-.s-step h3 { margin:16px 0 10px; font-size:clamp(22px,2.2vw,32px); font-weight:400; line-height:1.15; letter-spacing:-.03em; }
-.s-step p { max-width:34ch; margin:0; font-size:15px; line-height:1.6; color:var(--s-text-muted); }
-
 /* Experience: editorial rows. */
 .s-jobs { margin:0; padding:0; list-style:none; border-top:1px solid var(--s-line); }
 .s-job {
@@ -417,16 +395,6 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 
 /* ---------- Phase 4: closing sections ---------- */
 
-/* Why work with me: centred heading, four reasons on hairlines. */
-.s-head--center { display:flex; flex-direction:column; align-items:center; text-align:center; }
-#why .s-head--center .s-title { text-align:center; }
-.s-reasons { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(20px,2.5vw,40px); margin:0; padding:0; list-style:none; }
-.s-reason { padding-top:28px; border-top:1px solid var(--s-line); transition:border-color .4s ease; }
-.s-reason:hover { border-top-color:var(--s-red); }
-.s-reason__num { font-size:13px; color:var(--s-red); font-variant-numeric:tabular-nums; }
-.s-reason h3 { margin:18px 0 12px; font-size:clamp(20px,1.8vw,27px); font-weight:400; line-height:1.15; letter-spacing:-.03em; }
-.s-reason p { margin:0; font-size:15px; line-height:1.6; color:var(--s-text-muted); }
-
 /* Red closing section with a tilted, drifting wall of project screenshots. */
 #cta { --s-text-muted:#ffffffd9; --s-line:#ffffff33; background:var(--s-red); color:#fff; }
 .s-cta__wall {
@@ -471,15 +439,9 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 #contact .contact-val { font-size:clamp(15px,1.3vw,18px); }
 #contact .copy-email-link { margin-top:18px; font-family:var(--s-font); }
 
-@media(max-width:1000px) {
-  .s-reasons { grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:36px; }
-}
 @media(max-width:767px) {
   .s-cta__wall { inset:40% -40% -30% -20%; opacity:.55; -webkit-mask-image:linear-gradient(180deg,transparent,#000 30%); mask-image:linear-gradient(180deg,transparent,#000 30%); }
   #cta .s-cta__inner { align-self:flex-start; }
-}
-@media(max-width:600px) {
-  .s-reasons { grid-template-columns:minmax(0,1fr); }
 }
 @media(prefers-reduced-motion:reduce) {
   .s-cta__col { animation:none; }
@@ -491,10 +453,6 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 }
 @media(max-width:767px) {
   .s-work__grid,.s-work__more { grid-template-columns:minmax(0,1fr); }
-  .s-steps { grid-template-columns:minmax(0,1fr); gap:36px; padding:0 0 0 30px; }
-  .s-steps::before,.s-steps::after { top:0; bottom:0; right:auto; width:1px; height:auto; }
-  .s-steps::after { width:2px; left:-.5px; transform:scaleY(var(--progress,0)); transform-origin:top; }
-  .s-step::before { top:4px; left:-34px; }
   .s-job { grid-template-columns:minmax(0,1fr); gap:16px; }
   .s-edu__row { grid-template-columns:minmax(0,1fr) auto; gap:12px; }
   .s-facts { grid-template-columns:minmax(0,1fr); }
@@ -507,7 +465,7 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
   .s-lane__set { flex-wrap:wrap; flex-shrink:1; }
   .s-lane__skills { flex-wrap:wrap; }
   .s-lane__set[aria-hidden] { display:none; }
-  .s-laptop,.s-laptop__screen img,.s-edu__main h3,.s-step,.s-steps::after { transition:none; }
+  .s-laptop,.s-laptop__screen img,.s-edu__main h3 { transition:none; }
 }
 
 /* Reveal on entry — reuses the existing .motion-reveal / .is-visible transition. */

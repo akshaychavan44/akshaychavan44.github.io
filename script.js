@@ -78,7 +78,6 @@ window.addEventListener('scroll', () => {
 window.addEventListener('resize', updateActiveSection);
 updateActiveSection();
 
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // Skills marquee: repeat each lane's set once (hidden from assistive tech) so the
 // CSS animation can slide by exactly one set and loop seamlessly.
@@ -103,27 +102,6 @@ if (moreToggle && moreProjects) {
   });
 }
 
-// How I build: the red line fills as the section slides up, and is full once it pins.
-// (Measured from the section's in-flow position; a pinned section stops moving, so the
-// steps' own position can't drive this.)
-const steps = document.querySelector('.s-steps');
-if (steps) {
-  const section = steps.closest('section');
-  const header = document.querySelector('.site-header');
-  let stepsPending = false;
-  const updateSteps = () => {
-    stepsPending = false;
-    const flowTop = (section.previousElementSibling?.classList.contains('panel-marker') ? section.previousElementSibling : section).getBoundingClientRect().top;
-    const travel = window.innerHeight - header.offsetHeight;
-    const progress = reducedMotion.matches ? 1 : Math.min(1, Math.max(0, (window.innerHeight - flowTop) / travel));
-    steps.style.setProperty('--progress', progress.toFixed(3));
-    steps.querySelectorAll('.s-step').forEach((step, index, all) => step.classList.toggle('is-active', progress >= index / all.length + 0.05));
-  };
-  window.addEventListener('scroll', () => { if (!stepsPending) { stepsPending = true; requestAnimationFrame(updateSteps); } }, { passive: true });
-  window.addEventListener('resize', updateSteps);
-  reducedMotion.addEventListener('change', updateSteps);
-  updateSteps();
-}
 
 
 
