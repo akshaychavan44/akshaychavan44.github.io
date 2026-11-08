@@ -4,7 +4,7 @@
     "name": "Akshay Chavan",
     "role": "Software Developer",
     "eyebrow": "Software developer · India",
-    "headline": "Building thoughtful digital products, from interface to infrastructure.",
+    "headline": "Design. Build. Ship.",
     "intro": "I’m a full-stack developer who turns ideas into real, working products. I build scalable web applications using Next.js, Java, and PostgreSQL, with a focus on clean code, user experience, and real-world impact.",
     "about": "I am a software developer with hands-on experience building production-ready web applications, enterprise CRM modules, and microservices architectures. I hold a Bachelor of Science in Information Technology from Saket College with an 8.70/10 CGPA and completed professional Java Full Stack Development certification at Quality Software Technologies. My background combines corporate operations experience at Accenture with practical full-stack development at Zootechx.",
     "availability": "Open to full-time software developer roles",
@@ -141,26 +141,6 @@
       "visible": true
     },
     {
-      "id": "project-7",
-      "title": "E-Commerce Management System",
-      "description": "A distributed backend architecture for e-commerce operations, organized into independent services for product catalog, shopping cart, orders, and payments.",
-      "image": "",
-      "imageAlt": "",
-      "liveUrl": "",
-      "githubUrl": "https://github.com/akshaychavan44/ecom",
-      "category": "Backend",
-      "tags": [
-        "Java",
-        "Spring Boot",
-        "Microservices",
-        "MongoDB",
-        "REST APIs",
-        "Postman"
-      ],
-      "placement": "more",
-      "visible": true
-    },
-    {
       "id": "project-8",
       "title": "Jewelrex",
       "description": "A full-stack luxury fine jewelry marketplace and bespoke commission platform connecting collectors with independent jewelers. Supports 0% commission and direct communication between clients and jewelers.",
@@ -176,26 +156,6 @@
         "Neon Serverless PostgreSQL",
         "Cloud Storage",
         "Tailwind CSS"
-      ],
-      "placement": "more",
-      "visible": true
-    },
-    {
-      "id": "project-9",
-      "title": "Ticket Management System",
-      "description": "A support ticket tracking system allowing users to log, prioritize, assign, and resolve customer issues through a clean interface.",
-      "image": "",
-      "imageAlt": "",
-      "liveUrl": "",
-      "githubUrl": "https://github.com/akshaychavan44/Ticket-Management-System",
-      "category": "Full Stack",
-      "tags": [
-        "Node.js",
-        "Express.js",
-        "React.js",
-        "MongoDB Atlas",
-        "Tailwind CSS",
-        "Render"
       ],
       "placement": "more",
       "visible": true

@@ -1,0 +1,42 @@
+/*
+ * Section surfaces. Chapters alternate between paper (the existing page
+ * background) and a warm stone tone so each screen reads as its own surface;
+ * Contact and the footer close the page on a dark ink band.
+ * Loaded last so it can override the layered base styles without !important.
+ */
+:root {
+  --tone-stone:radial-gradient(ellipse at 12% 0%,#ffffff8c 0,transparent 55%),#f0efeb;
+  --tone-ink:#111113;
+  --tone-ink-text:#f4f4f5;
+  --tone-ink-muted:#a1a1aa;
+  --tone-ink-line:#ffffff1f;
+}
+
+/* Tones separate the chapters now, so the hairline between them is redundant. */
+.section { border-top:0; }
+#projects,#about,#education { background:var(--tone-stone); }
+/* Paper chapters show the shared page background (Skills previously had its own white panel). */
+#experience,#skills { background:transparent; }
+
+#contact,.site-footer {
+  --ink:var(--tone-ink-text);
+  --muted:var(--tone-ink-muted);
+  --line:var(--tone-ink-line);
+  background:var(--tone-ink);
+  color:var(--tone-ink-text);
+}
+#contact h2,#contact h3,.site-footer .brand { color:var(--tone-ink-text); }
+#contact .editorial-label h2::after { background:#ffffff40; }
+#contact .connect-intro > p,.site-footer .footer-description,.site-footer .copyright,#contact .contact-label { color:var(--tone-ink-muted); }
+#contact .contact-val,.site-footer a { color:var(--tone-ink-text); }
+#contact .round-icon,.site-footer .round-icon { background:#ffffff12; color:var(--tone-ink-text); }
+#contact .copy-email-link { color:var(--tone-ink-muted); }
+#contact .copy-email-link:hover { color:var(--tone-ink-text); }
+.site-footer { border-top:1px solid var(--tone-ink-line); }
+
+/* Buttons invert on the dark band. */
+#contact .btn-primary { background:#fafafa; border-color:#fafafa; color:#111; }
+#contact .btn-primary:hover { background:#e4e4e7; border-color:#e4e4e7; color:#111; }
+#contact .btn-secondary { background:transparent; border-color:#ffffff33; color:var(--tone-ink-text); }
+#contact .btn-secondary:hover { background:#ffffff14; color:var(--tone-ink-text); }
+#contact :focus-visible,.site-footer :focus-visible { outline-color:#e4e4e7; }

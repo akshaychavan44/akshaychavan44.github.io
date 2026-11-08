@@ -1,8 +1,10 @@
 import { contentReady } from './portfolio-content.js';
 import { setupNameIntro } from './portfolio-motion.js';
 import { setupMinimalCursor } from './minimal-cursor.js';
+import { setupHeroWave } from './hero-wave.js';
 
 setupMinimalCursor();
+setupHeroWave(document.querySelector('.s-hero__wave'));
 
 // Refresh starts a fresh visit at the introduction, rather than the last chapter.
 if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
@@ -14,5 +16,6 @@ if (performance.getEntriesByType('navigation')[0]?.type === 'reload') {
 const revealPortfolio = setupNameIntro();
 contentReady.then(async () => {
   await import('./script.js');
-  await import('./deck.js');
+  const { setupStacking } = await import('./stacking.js');
+  setupStacking();
 }).finally(revealPortfolio);

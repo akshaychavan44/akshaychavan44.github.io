@@ -14,6 +14,9 @@
 }
 .site-header .nav-links a:hover,.site-header .nav-links a:focus-visible { background:transparent; }
 .site-header .brand,.site-header .brand:hover { border:0; box-shadow:none; text-decoration:none; }
+/* No box around the name (focus lands here after the intro); keyboard users still get an underline cue. */
+.site-header .brand:focus,.site-header .brand:focus-visible { outline:none; }
+.site-header .brand:focus-visible { text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:2px; }
 .intro-playing,.intro-playing body { overflow:hidden; }
 .name-intro {
   --intro-name-size:clamp(40px,9.7vw,180px);

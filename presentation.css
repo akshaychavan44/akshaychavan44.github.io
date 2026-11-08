@@ -81,9 +81,9 @@ body::before { content:''; position:fixed; inset:0; z-index:-1; background:var(-
 .edu-title,.hero-aside h3 { font-size:clamp(22px,1.9vw,27px); line-height:1.3; }
 .skills-panel h3 { font-size:clamp(36px,4vw,56px); }
 .hero-intro,.section-lead,.project-desc,.exp-bullets li,.skills-panel-description,.connect-intro>p,.hero-aside p:not(.eyebrow) {
-  text-align:justify;
-  text-justify:inter-word;
-  hyphens:auto;
+  /* Left-aligned: justified text left uneven word gaps and mid-word hyphen breaks. */
+  text-align:left;
+  hyphens:manual;
 }
 .project-desc,.exp-bullets,.connect-intro>p { font-size:clamp(15px,1.2vw,17px); line-height:1.8; }
 .exp-duration { font-size:15px; }
@@ -129,22 +129,6 @@ body::before { content:''; position:fixed; inset:0; z-index:-1; background:var(-
   .process-card-top { margin-bottom:14px; }
 }
 
-/* Section transitions affect motion only; section markup and layout stay intact. */
-.deck-enabled { overflow:hidden; height:100%; scroll-behavior:auto; }
-.deck-enabled body { height:100%; overflow:hidden; overscroll-behavior:none; }
-.deck-enabled .site-header { position:fixed; inset:0 0 auto; height:var(--header-height); padding-top:env(safe-area-inset-top,0px); z-index:20; }
-.deck-enabled .deck { position:fixed; inset:var(--header-height) 0 0; overflow:hidden; }
-@supports(height:100dvh) {
-  .deck-enabled .deck { bottom:auto; height:calc(100dvh - var(--header-height)); }
-}
-.deck-enabled .deck-scene {
-  position:absolute; inset:0; overflow:auto; overscroll-behavior:contain;
-  scroll-behavior:auto; scrollbar-width:thin; overflow-x:hidden;
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-.deck-enabled .deck-scene[hidden] { display:none !important; }
-.deck-enabled .motion-reveal { opacity:1; translate:none; }
-.deck-status { position:fixed; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
 @media(max-width:767px) {
   .site-header .nav-links {
     background:#f8fafbd9;
@@ -153,11 +137,4 @@ body::before { content:''; position:fixed; inset:0; z-index:-1; background:var(-
     border-bottom-color:#ffffff99;
     box-shadow:0 12px 28px #172b480a;
   }
-}
-@media print {
-  .deck-enabled,.deck-enabled body { overflow:visible; height:auto; }
-  .deck-enabled .site-header { position:static; }
-  .deck-enabled .deck { position:static; overflow:visible; }
-  html.deck-enabled .deck-scene,html.deck-enabled .deck-scene[hidden] { position:static; display:block !important; overflow:visible; }
-  .deck-status { display:none; }
 }

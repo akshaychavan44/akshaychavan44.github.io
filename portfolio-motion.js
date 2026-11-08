@@ -150,7 +150,7 @@ export function setupNameIntro() {
       animations.push(caption.animate([{ opacity: .85 }, { opacity: 0 }], { duration: 220, fill: 'forwards' }));
       animations.push(skip.animate([{ opacity: 1 }, { opacity: 0 }], { delay: 260, duration: 350, fill: 'forwards' }));
       animations.push(backdrop.animate([{ opacity: 1 }, { opacity: 0 }], { delay: 200, duration: 450, easing, fill: 'forwards' }));
-      const content = [document.querySelector('.site-header'), document.querySelector('.deck-scene:not([hidden])') || document.querySelector('main')];
+      const content = [document.querySelector('.site-header'), document.querySelector('main')];
       content.forEach(element => animations.push(element.animate([
         { opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'translateY(0)' }
       ], { delay: 200, duration: 650, easing, fill: 'both' })));

@@ -3,16 +3,25 @@ import { validateContent } from './content-schema.mjs';
 export function renderContent(data) {
   const { profile: p, projects } = validateContent(data);
   const text = (selector, value) => document.querySelectorAll(selector).forEach(el => { el.textContent = value; });
-  text('.brand', `${p.name}.`);
-  text('.hero-grid > div:first-child > .eyebrow', p.eyebrow);
-  text('.hero h1', p.headline);
-  text('.hero-intro', p.intro);
-  text('.hero-availability p', p.availability);
-  text('.hero-aside > div:first-child h3', p.currentRole);
-  text('.hero-aside > div:first-child > p:last-child', p.company);
-  text('.hero-aside > div:nth-child(2) h3', p.focus);
-  text('.hero-aside > div:nth-child(2) > p:last-child', p.focusDescription);
-  text('.aside-contact > span, .location-value', p.location);
+  text('.brand', p.name);
+  text('.s-hero__eyebrow', p.eyebrow);
+  // The headline's closing punctuation takes the accent colour ("Design. Build. Ship.").
+  const heroTitle = document.querySelector('.s-hero__title');
+  const [, headlineBody, headlineEnd] = p.headline.trim().match(/^(.*?)([.!?]?)$/s);
+  const accent = document.createElement('span');
+  accent.className = 's-accent';
+  accent.textContent = headlineEnd;
+  heroTitle.replaceChildren(document.createTextNode(headlineBody), ...(headlineEnd ? [accent] : []));
+  // Hero stats follow the content: every visible project, and every skill listed in the Skills section.
+  text('[data-stat="projects"]', String(projects.filter(project => project.visible).length));
+  text('[data-stat="skills"]', String(document.querySelectorAll('#skills .s-lane__set:not([aria-hidden]) .s-skill').length));
+  text('.s-hero__intro', p.intro);
+  text('.s-hero__availability-text', p.availability);
+  text('.s-hero__role, .s-about__role', p.currentRole);
+  text('.s-hero__company, .s-about__company', p.company);
+  text('.s-about__focus', p.focus);
+  text('.s-about__focus-text', p.focusDescription);
+  text('.s-hero__location, .s-about__location, .location-value', p.location);
   text('.about-title', p.role);
   text('#about .section-lead', p.about);
   text('.contact-title', p.contactTitle);
@@ -36,32 +45,55 @@ export function renderContent(data) {
   }
   const node = (tag, className, value) => { const el = document.createElement(tag); el.className = className; if (value) el.textContent = value; return el; };
   const link = (url, className, label) => { const a = node('a', className, label); a.href = url; a.target = '_blank'; a.rel = 'noreferrer'; return a; };
-  const containers = { selected: '.projects-container', additional: '.additional-live-projects', more: '#moreProjects' };
-  for (const [placement, selector] of Object.entries(containers)) {
-    const container = document.querySelector(selector);
-    container.replaceChildren();
-    projects.filter(project => project.visible && project.placement === placement).forEach(project => {
-      const article = node('article', `project-item${placement === 'more' ? '' : ' featured'}`);
-      if (project.image) {
-        const preview = project.liveUrl ? link(project.liveUrl, 'project-preview') : node('div', 'project-preview');
-        if (project.liveUrl) preview.setAttribute('aria-label', `Visit ${project.title}`);
-        const image = document.createElement('img'); image.src = project.image; image.alt = project.imageAlt || project.title;
-        image.width = 1440; image.height = 900; image.loading = 'lazy'; preview.append(image); article.append(preview);
-      }
-      const title = node('h3', 'project-title');
-      title.append(project.liveUrl ? link(project.liveUrl, '', `${project.title} ↗`) : document.createTextNode(project.title));
-      article.append(title);
-      if (project.category) article.append(node('span', 'project-category-badge', project.category));
-      article.append(node('p', 'project-desc', project.description));
-      const tags = node('div', 'project-tech-list');
-      project.tags.forEach(tag => tags.append(node('span', 'tech-tag', tag))); article.append(tags);
-      const actions = node('div', 'project-actions');
-      if (project.liveUrl) actions.append(link(project.liveUrl, 'project-live-link', 'View live site ↗'));
-      if (project.githubUrl) actions.append(link(project.githubUrl, 'project-live-link', 'View on GitHub ↗'));
-      article.append(actions); container.append(article);
-    });
-    container.hidden = !container.children.length;
+  // Selected projects lead the grid; "additional" and "more" open behind "View all projects".
+  const visible = projects.filter(project => project.visible);
+  const groups = [
+    [document.querySelector('.s-work__grid'), visible.filter(project => project.placement === 'selected')],
+    [document.getElementById('moreProjects'), visible.filter(project => project.placement !== 'selected')],
+  ];
+  let index = 0;
+  for (const [container, items] of groups) {
+    container.replaceChildren(...items.map(project => projectCard(project, ++index, node, link)));
   }
+  document.querySelector('.s-work__actions').hidden = !groups[1][1].length;
+}
+
+function projectCard(project, index, node, link) {
+  const article = node('article', `s-project${project.image ? '' : ' s-project--text'}`);
+  if (project.image) {
+    const media = project.liveUrl ? link(project.liveUrl, 's-project__media') : node('div', 's-project__media');
+    if (project.liveUrl) media.setAttribute('aria-label', `Visit ${project.title}`);
+    const laptop = node('div', 's-laptop');
+    const screen = node('div', 's-laptop__screen');
+    const image = document.createElement('img');
+    image.src = project.image; image.alt = project.imageAlt || project.title;
+    image.width = 1440; image.height = 900; image.loading = 'lazy';
+    screen.append(image);
+    laptop.append(screen, node('div', 's-laptop__base'));
+    media.append(laptop);
+    article.append(media);
+  }
+  const body = node('div', 's-project__body');
+  const top = node('div', 's-project__top');
+  top.append(node('span', 's-project__index', String(index).padStart(2, '0')));
+  if (project.category) top.append(node('span', 's-project__category', project.category));
+  const title = node('h3', 's-project__title');
+  title.append(project.liveUrl ? link(project.liveUrl, '', project.title) : document.createTextNode(project.title));
+  const tags = node('ul', 's-tags');
+  project.tags.forEach(tag => tags.append(node('li', 's-tag', tag)));
+  body.append(top, title, node('p', 's-project__desc', project.description), tags);
+  const links = [[project.liveUrl, 'Live site'], [project.githubUrl, 'GitHub']].filter(([url]) => url);
+  if (links.length) {
+    const row = node('div', 's-project__links');
+    links.forEach(([url, label]) => {
+      const anchor = link(url, 's-link', `${label} `);
+      const arrow = node('span', '', '↗'); arrow.setAttribute('aria-hidden', 'true');
+      anchor.append(arrow); row.append(anchor);
+    });
+    body.append(row);
+  }
+  article.append(body);
+  return article;
 }
 
 export const contentReady = (async () => { try {
