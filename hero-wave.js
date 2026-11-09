@@ -78,14 +78,8 @@ export function setupHeroWave(canvas) {
   }
 
   new ResizeObserver(resize).observe(canvas);
-  // Off screen, or fully covered by the next stacked panel: stop drawing.
-  let onScreen = false;
-  let covered = false;
-  const sync = () => { visible = onScreen && !covered; if (visible) play(); else pause(); };
-  new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; sync(); }).observe(canvas);
-  canvas.closest('section')?.addEventListener('panelcover', event => {
-    if (event.detail.covered !== covered) { covered = event.detail.covered; sync(); }
-  });
+  // Off screen: stop drawing.
+  new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; if (visible) play(); else pause(); }).observe(canvas);
   document.addEventListener('visibilitychange', () => (document.hidden ? pause() : play()));
   reducedMotion.addEventListener('change', () => {
     if (reducedMotion.matches) { pause(); draw(0); } else play();

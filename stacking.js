@@ -1,10 +1,6 @@
-// Native-scroll stacking panels (CSS does the pinning; see studio.css "Phase 2").
-// This script only measures and feeds CSS variables:
-//  - where each panel pins, so panels taller than the screen scroll through fully
-//  - how far the next panel has covered it (sink + dim)
-// It also tints the header to the panel beneath it, reveals content on entry,
-// and scrolls in-page links to a panel's real position (pinned panels report a
-// moved position, so the browser's own anchor jump can land in the wrong place).
+// Panel behaviour for <main> sections (normal scrolling, no pinning):
+// tints the header to the panel beneath it, reveals content on entry,
+// and scrolls in-page links to a panel's top just below the fixed header.
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const revealSelector = [
@@ -23,31 +19,15 @@ export function setupStacking() {
 
   function measure() {
     headerHeight = header.offsetHeight;
-    const available = innerHeight - headerHeight;
-    panels.forEach(panel => {
-      // Short panels pin under the header; tall ones pin once their bottom reaches the screen's bottom.
-      const top = Math.min(headerHeight, headerHeight + available - panel.offsetHeight);
-      panel.style.setProperty('--stick-top', `${top}px`);
-    });
     update();
   }
 
+  // Tint the header to match the panel currently beneath it.
   function update() {
     pending = false;
-    const animate = !reducedMotion.matches;
-    const viewportCentre = headerHeight + (innerHeight - headerHeight) / 2;
     let current = panels[0];
-    panels.forEach((panel, index) => {
-      const rect = panel.getBoundingClientRect();
-      // Use the in-flow marker: the panel's own rect moves as it sinks.
+    panels.forEach(panel => {
       if (markers.get(panel).getBoundingClientRect().top <= headerHeight + 2) current = panel;
-      const next = panels[index + 1];
-      if (!animate || !next) { panel.style.removeProperty('--cover'); return; }
-      const nextTop = next.getBoundingClientRect().top;
-      const cover = Math.min(1, Math.max(0, (innerHeight - nextTop) / (innerHeight - headerHeight)));
-      panel.style.setProperty('--cover', cover.toFixed(3));
-      panel.style.setProperty('--cover-origin', `${Math.round(viewportCentre - rect.top)}px`);
-      panel.dispatchEvent(new CustomEvent('panelcover', { detail: { covered: cover >= 1 } }));
     });
     if (header.dataset.tone !== current.dataset.tone) header.dataset.tone = current.dataset.tone || 'dark';
   }
@@ -56,7 +36,6 @@ export function setupStacking() {
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', measure);
   new ResizeObserver(measure).observe(main);
-  reducedMotion.addEventListener('change', measure);
 
   // A zero-height marker before each panel stays in normal flow, so it reports the
   // panel's true scroll position even while the panel itself is pinned.

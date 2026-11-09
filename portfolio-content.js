@@ -32,6 +32,12 @@ export function renderContent(data) {
   document.querySelector('meta[name="description"]').content = p.seoDescription;
   document.querySelectorAll('a[href^="mailto:"]').forEach(a => { a.href = `mailto:${p.email}`; if (a.matches('.contact-val, .aside-contact a')) a.textContent = p.email; });
   document.querySelectorAll('a[href^="tel:"]').forEach(a => { a.href = `tel:${p.phone.replace(/[^+\d]/g, '')}`; a.textContent = p.phone; });
+  // "Let's talk" opens a WhatsApp chat with a pre-written message; without a phone number it falls back to the contact section.
+  const whatsappNumber = (p.phone || '').replace(/\D/g, '');
+  document.querySelectorAll('a[data-whatsapp]').forEach(a => {
+    a.href = whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hello, can we talk?')}` : '#contact';
+    if (!whatsappNumber) a.removeAttribute('target');
+  });
   document.querySelectorAll('.connect-actions a:nth-child(2), .footer-links a[aria-label="GitHub"]').forEach(a => { a.href = p.github || '#contact'; a.hidden = !p.github; });
   const resume = document.querySelector('.resume-link');
   resume.href = p.resume || '#contact'; resume.hidden = !p.resume;

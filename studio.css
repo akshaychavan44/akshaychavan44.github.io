@@ -24,18 +24,23 @@
 /* ---------- Header ---------- */
 .site-header {
   font-family:var(--s-font);
-  /* Near-opaque: the light page background behind it otherwise tints the bar grey. */
-  background:#0a0a0af0;
+  /* Transparent bar that floats over the page: the negative margin lets the first
+     section slide up underneath it. A light blur keeps the links readable over content. */
+  margin-bottom:calc(-1 * var(--header-height,67px));
+  background:transparent;
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   border-bottom:1px solid #ffffff12;
   box-shadow:none;
   color:var(--s-ink);
 }
-.site-header .nav { gap:clamp(12px,3vw,40px); }
+/* Name hugs the left edge and "Let's talk" the right, with a smaller inset than page content. */
+.site-header .nav { gap:clamp(12px,3vw,40px); width:calc(100% - 2 * clamp(16px,2vw,28px)); }
 .site-header .brand,.site-header .brand:hover {
   color:var(--s-ink); font-family:var(--s-font); font-size:20px; font-weight:600; letter-spacing:-.03em;
 }
 .site-header .nav-links { margin-inline:auto; }
-.site-header .nav-links a { color:#ffffffa6; font-size:14px; font-weight:400; letter-spacing:-.005em; }
+.site-header .nav-links a { color:#ffffffa6; font-size:17px; font-weight:400; letter-spacing:-.005em; }
 .site-header .nav-links a[aria-current],
 .site-header .nav-links a:focus-visible { color:var(--s-ink); }
 @media(hover:hover) and (pointer:fine) {
@@ -46,7 +51,7 @@
 .nav-cta {
   display:inline-flex; align-items:center; gap:10px; flex-shrink:0;
   min-height:40px; padding:4px 4px 4px 16px; border:1px solid #ffffff2e; border-radius:var(--s-radius-pill);
-  color:var(--s-ink); font-size:13px; font-weight:500; text-decoration:none; white-space:nowrap;
+  color:var(--s-ink); font-size:15px; font-weight:500; text-decoration:none; white-space:nowrap;
   transition:border-color .3s ease,background-color .3s ease;
 }
 .nav-cta:hover { color:var(--s-ink); text-decoration:none; border-color:#ffffff59; background:#ffffff0a; }
@@ -121,11 +126,12 @@
 
 /* ---------- Hero ---------- */
 .s-hero {
-  /* Positioned by the sticky panel rules below (no position here, or it would win). */
+  /* Positioned by the panel rules below (no position here, or it would win). */
   isolation:isolate; overflow:hidden;
-  min-height:calc(100svh - var(--header-height,67px));
+  /* Full screen: the transparent header floats over the top of the hero. */
+  min-height:100svh;
   display:grid; grid-template-rows:1fr auto;
-  padding:clamp(40px,8vh,96px) var(--s-gutter) 0;
+  padding:calc(var(--header-height,67px) + clamp(40px,8vh,96px)) var(--s-gutter) 0;
   background:var(--s-black); color:var(--s-ink); font-family:var(--s-font);
 }
 .s-hero__wave {
@@ -174,7 +180,7 @@
   .s-hero__scroll { display:none; }
 }
 @media(max-width:640px) {
-  .s-hero { padding-top:32px; }
+  .s-hero { padding-top:calc(var(--header-height,67px) + 32px); }
   .s-hero__title { font-size:clamp(46px,15vw,72px); line-height:.98; }
   .s-hero__actions { flex-direction:column; align-items:stretch; width:100%; max-width:340px; }
   .s-hero__actions .s-btn { justify-content:space-between; }
@@ -183,33 +189,18 @@
   .s-stats { justify-content:space-between; }
 }
 
-/* ---------- Phase 2: stacking panels ----------
- * Every section in <main> is a sticky panel; the next one slides up over it.
- * stacking.js sets per panel:
- *   --stick-top     where it pins (negative for panels taller than the screen, so they
- *                   scroll through fully and pin by their bottom edge)
- *   --cover         0→1 as the next panel covers it (drives the sink + dim)
- *   --cover-origin  the viewport centre in panel coordinates, so it sinks around what you see
+/* ---------- Panels ----------
+ * Every section in <main> is a full-height panel that scrolls normally.
+ * stacking.js only tints the header and handles in-page links.
  */
-/* Dark backdrop shows around a panel as it sinks back. */
 main { background:var(--s-black); }
 main > section {
-  position:sticky;
-  top:var(--stick-top,var(--header-height,67px));
+  position:relative;
   min-height:calc(100svh - var(--header-height,67px));
-  transform-origin:50% var(--cover-origin,0px);
-  transform:scale(calc(1 - var(--cover,0) * .06));
-}
-main > section::after {
-  content:''; position:absolute; inset:0; z-index:5; pointer-events:none;
-  background:#000; opacity:calc(var(--cover,0) * .55);
+  /* Keep decorative overflow (e.g. the tilted CTA wall) inside its own section. */
+  overflow:clip;
 }
 .panel-marker { display:block; height:0; }
-main > section:not(:first-of-type) {
-  border-radius:clamp(20px,2.4vw,32px) clamp(20px,2.4vw,32px) 0 0;
-  overflow:clip;
-  box-shadow:0 -30px 60px -24px #00000059;
-}
 main > .section {
   display:flex; flex-direction:column; justify-content:center;
   border-top:0;
@@ -232,7 +223,7 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 
 /* Header follows the panel underneath it (data-tone set by stacking.js). */
 .site-header { transition:background-color .4s ease,border-color .4s ease,color .4s ease; }
-.site-header[data-tone=light] { background:#fffffff0; border-bottom-color:#0000000f; color:var(--s-paper-ink); }
+.site-header[data-tone=light] { border-bottom-color:#0000000f; color:var(--s-paper-ink); }
 .site-header[data-tone=light] .brand,.site-header[data-tone=light] .brand:hover { color:var(--s-paper-ink); }
 .site-header[data-tone=light] .nav-links a { color:#00000099; }
 .site-header[data-tone=light] .nav-links a[aria-current],
@@ -377,21 +368,44 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 #about .floating-code { background:#161616; border-color:#ffffff2e; color:var(--s-ink); box-shadow:0 16px 30px #00000066; }
 #about .laptop { filter:drop-shadow(0 20px 24px #00000080); }
 
-/* Education: rows like Experience, lighter. */
-.s-edu { margin:0; padding:0; list-style:none; border-top:1px solid var(--s-line); }
-.s-edu__row {
-  /* Fixed-ratio columns so every row lines up, whatever the score's length. */
-  display:grid; grid-template-columns:minmax(0,1fr) minmax(130px,auto); gap:24px; align-items:baseline;
-  padding:clamp(22px,3vw,36px) 0; border-bottom:1px solid var(--s-line);
+/* Education: centred entries that lift into a black card on hover / press. */
+.s-edu { display:grid; gap:6px; margin:0; padding:0; list-style:none; }
+/* Doubled class outranks .motion-reveal, so the transition list below must keep
+   the reveal's opacity/translate (with its stagger delay) alongside the hover ones. */
+.s-edu .s-edu__row {
+  position:relative; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center;
+  padding:clamp(22px,3vw,34px) clamp(16px,3vw,40px); border-radius:clamp(16px,1.6vw,24px);
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:transform .5s var(--s-ease), background-color .4s var(--s-ease), color .4s var(--s-ease), box-shadow .5s var(--s-ease),
+             opacity .7s ease var(--reveal-delay,0ms), translate .8s var(--s-ease) var(--reveal-delay,0ms);
 }
+/* Dividers between entries; they fade next to the lifted card. */
+.s-edu__row::after {
+  content:''; position:absolute; left:0; right:0; bottom:-3.5px; height:1px;
+  background:var(--s-line); transition:opacity .3s ease;
+}
+.s-edu__row:last-child::after { display:none; }
 /* Year / label sits on the subheading line, after the institution. */
-.s-edu__main p { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; }
+.s-edu__main p { display:flex; flex-wrap:wrap; justify-content:center; align-items:baseline; gap:4px 14px; margin:8px 0 0; font-size:15px; color:var(--s-text-muted); }
 .s-edu__when { font-size:13px; color:var(--s-text-muted); }
 .s-edu__when::before { content:''; display:inline-block; width:4px; height:4px; margin:0 12px 2px 0; border-radius:50%; background:var(--s-red); vertical-align:middle; }
-.s-edu__main h3 { margin:0; font-size:clamp(22px,2.5vw,38px); font-weight:400; line-height:1.12; letter-spacing:-.035em; transition:transform .6s var(--s-ease); }
-.s-edu__row:hover .s-edu__main h3 { transform:translateX(10px); }
-.s-edu__main p { margin:6px 0 0; font-size:15px; color:var(--s-text-muted); }
-.s-edu__score { font-size:clamp(15px,1.3vw,19px); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap; }
+.s-edu__main h3 { margin:0; font-size:clamp(22px,2.5vw,38px); font-weight:400; line-height:1.12; letter-spacing:-.035em; text-wrap:balance; }
+.s-edu__score {
+  display:inline-flex; padding:6px 16px; border:1px solid var(--s-line); border-radius:999px;
+  font-size:clamp(14px,1.1vw,16px); font-variant-numeric:tabular-nums; white-space:nowrap;
+  transition:background-color .4s var(--s-ease), border-color .4s var(--s-ease), color .4s var(--s-ease);
+}
+.s-edu .s-edu__row:focus-visible { outline:2px solid var(--s-paper-ink); outline-offset:3px; }
+/* Hovered, pressed or clicked (selected): black card, white text. Selection stays until another entry is chosen. */
+.s-edu .s-edu__row:is(:hover,:active,.is-selected) {
+  z-index:1; transform:translateY(-4px); background:var(--s-black); color:#fff;
+  box-shadow:0 24px 44px -24px #00000080;
+}
+.s-edu__row:is(:hover,:active,.is-selected) .s-edu__main p,
+.s-edu__row:is(:hover,:active,.is-selected) .s-edu__when { color:#ffffffb3; }
+.s-edu__row:is(:hover,:active,.is-selected) .s-edu__score { background:#fff; border-color:#fff; color:var(--s-black); }
+.s-edu__row:is(:hover,:active,.is-selected)::after,
+.s-edu__row:has(+ .s-edu__row:is(:hover,:active,.is-selected))::after { opacity:0; }
 
 /* ---------- Phase 4: closing sections ---------- */
 
@@ -454,7 +468,6 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 @media(max-width:767px) {
   .s-work__grid,.s-work__more { grid-template-columns:minmax(0,1fr); }
   .s-job { grid-template-columns:minmax(0,1fr); gap:16px; }
-  .s-edu__row { grid-template-columns:minmax(0,1fr) auto; gap:12px; }
   .s-facts { grid-template-columns:minmax(0,1fr); }
 }
 
@@ -465,16 +478,14 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
   .s-lane__set { flex-wrap:wrap; flex-shrink:1; }
   .s-lane__skills { flex-wrap:wrap; }
   .s-lane__set[aria-hidden] { display:none; }
-  .s-laptop,.s-laptop__screen img,.s-edu__main h3 { transition:none; }
+  .s-laptop,.s-laptop__screen img { transition:none; }
+  .s-edu .s-edu__row:is(:hover,:active,.is-selected) { transform:none; }
 }
 
 /* Reveal on entry — reuses the existing .motion-reveal / .is-visible transition. */
 .motion-reveal { transition-duration:.8s,.9s; }
 
-/* Reduced motion: no pinning, sinking or dimming — panels simply follow each other. */
 @media(prefers-reduced-motion:reduce) {
-  main > section { position:relative; top:auto; transform:none; }
-  main > section::after { display:none; }
   .site-header { transition:none; }
 }
 
@@ -485,6 +496,5 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
 @media print {
   .s-hero { min-height:0; background:#fff; color:#000; }
   .s-hero__wave { display:none; }
-  main > section { position:static; transform:none; min-height:0; box-shadow:none; }
-  main > section::after { display:none; }
+  main > section { position:static; min-height:0; }
 }

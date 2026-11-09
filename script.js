@@ -101,9 +101,26 @@ if (moreToggle && moreProjects) {
     if (open) moreProjects.querySelector('a, h3')?.focus({ preventScroll: true });
   });
 }
-
-
-
+// Education entries: click (or Enter / Space) selects one; selecting it again clears it.
+const eduRows = [...document.querySelectorAll('.s-edu__row')];
+const setEduSelected = row => {
+  const select = row.getAttribute('aria-pressed') !== 'true';
+  eduRows.forEach(other => {
+    other.setAttribute('aria-pressed', String(select && other === row));
+    other.classList.toggle('is-selected', select && other === row);
+  });
+};
+eduRows.forEach(row => {
+  row.tabIndex = 0;
+  row.setAttribute('role', 'button');
+  row.setAttribute('aria-pressed', 'false');
+  row.addEventListener('click', () => setEduSelected(row));
+  row.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    setEduSelected(row);
+  });
+});
 
 // Keep menu state and focus consistent when crossing the navigation breakpoint.
 const compactNavigation = window.matchMedia('(max-width: 767px)');
