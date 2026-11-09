@@ -34,8 +34,8 @@
   box-shadow:none;
   color:var(--s-ink);
 }
-/* Name hugs the left edge and "Let's talk" the right, with a smaller inset than page content. */
-.site-header .nav { gap:clamp(12px,3vw,40px); width:calc(100% - 2 * clamp(16px,2vw,28px)); }
+/* Name sits at the screen's left edge and "Let's talk" at the right, with only a small 16px inset. */
+.site-header .nav { gap:clamp(12px,3vw,40px); width:100%; max-width:none; margin-inline:0; padding-inline:16px; box-sizing:border-box; }
 .site-header .brand,.site-header .brand:hover {
   color:var(--s-ink); font-family:var(--s-font); font-size:20px; font-weight:600; letter-spacing:-.03em;
 }
