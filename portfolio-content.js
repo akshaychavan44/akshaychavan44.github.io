@@ -30,7 +30,13 @@ export function renderContent(data) {
   text('.copyright', `© ${new Date().getFullYear()} ${p.name}. All rights reserved.`);
   document.title = `${p.name} | ${p.role}`;
   document.querySelector('meta[name="description"]').content = p.seoDescription;
-  document.querySelectorAll('a[href^="mailto:"]').forEach(a => { a.href = `mailto:${p.email}`; if (a.matches('.contact-val, .aside-contact a')) a.textContent = p.email; });
+  // Email links open a Gmail compose window addressed to the profile email (the static mailto: href is the no-JS fallback).
+  document.querySelectorAll('a[href^="mailto:"]').forEach(a => {
+    a.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(p.email)}`;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    if (a.matches('.contact-val, .aside-contact a')) a.textContent = p.email;
+  });
   document.querySelectorAll('a[href^="tel:"]').forEach(a => { a.href = `tel:${p.phone.replace(/[^+\d]/g, '')}`; a.textContent = p.phone; });
   // "Let's talk" opens a WhatsApp chat with a pre-written message; without a phone number it falls back to the contact section.
   const whatsappNumber = (p.phone || '').replace(/\D/g, '');
