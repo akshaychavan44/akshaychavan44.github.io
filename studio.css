@@ -498,3 +498,11 @@ main > [data-tone=dark] { --s-text:var(--s-ink); --s-text-muted:#ffffff94; --s-l
   .s-hero__wave { display:none; }
   main > section { position:static; min-height:0; }
 }
+
+/* Mobile: sections fit their content instead of filling a full screen, which left
+   large empty gaps above and below short sections such as Skills. Desktop is unchanged. */
+@media (max-width:767px) {
+  main > section { min-height:0; }
+  main > .section { justify-content:flex-start; padding-block:clamp(48px,9vh,72px); }
+  .s-head { margin-bottom:28px; }
+}
