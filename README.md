@@ -7,12 +7,13 @@ This is my personal portfolio website built using HTML, CSS, and JavaScript. It 
 - HTML
 - CSS
 - JavaScript
+- Vite (dev server and build)
 
 ## Local admin studio
 
 Run `npm install` once, then `npm run dev -- --host 127.0.0.1` and open `/admin.html` at the printed local URL.
 
-The studio manages all nine existing projects and supports adding, editing, duplicating, deleting, hiding, grouping, and ordering projects. Edit project screenshots, technology tags, live and GitHub links; update profile copy, availability, contact details, social links, résumé, and the search description. Upload PNG/JPG/WebP screenshots or a PDF résumé (5 MB maximum). Export and import content backups from the Backups page.
+The studio manages all existing projects and supports adding, editing, duplicating, deleting, hiding, grouping, and ordering projects. Edit project screenshots, technology tags, live and GitHub links; update profile copy, availability, contact details, social links, résumé, and the search description. Upload PNG/JPG/WebP screenshots or a PDF résumé (5 MB maximum). Export and import content backups from the Backups page.
 
 Changes remain a draft until **Save changes** writes `public/content.json`. Refresh the portfolio to review saved changes. To update the public website, deploy the changed project using your usual hosting workflow. Uploaded assets live in `public/uploads`; include them with the content file when committing/deploying. Back up that folder separately from JSON exports. A copy of the previous save is retained at `.local/content.previous.json` (ignored by Git).
 
@@ -22,12 +23,22 @@ The admin and login pages, their scripts, and the write API are excluded from `n
 
 Keep the dev server bound to `127.0.0.1`. The write API checks loopback access, request origin, a session token, file types, size limits, and content structure. Concurrent editors get a conflict warning rather than overwriting each other. Do not store secrets in public portfolio content.
 
+## Commands
+
+- `npm run dev` starts the dev server on http://localhost:5173
+- `npm run build` creates the production build in `dist/`
+- `npm run preview` serves the production build locally
+
+Projects and profile text come from `public/content.json`. Experience, Education, About and Skills are written directly in `index.html`.
+
 ## Sections
 
 - Home
-- About
+- Selected work (projects)
 - Skills
-- Projects
+- Experience
+- About
+- Education
 - Contact
 
 ## Live Demo
